@@ -8,8 +8,9 @@ players_list = [{"identifiant" : 1, "nom" : "Florian", "prénom" : "Serge", "age
 	{"identifiant" : 8, "nom" : "Ibrahim", "prénom" : "Abdel", "age" : 52, "classement" : 0, "points" : 0}
 ]
 
-
-
+class Player:
+	"""instanciates each player"""
+	pass
 
 class PlayerPick:
 	def __init__(self, identifiant, nom, prénom, age, classement, points):
@@ -20,13 +21,15 @@ class PlayerPick:
 		self.classement = classement
 		self.points = points
 
-	def display_players(identifiant, nom, prénom, age, classement, points):
-		"""display all players"""
-		print(f"{players_dict[1]")
+	def display_players(self, identifiant, nom, prénom, age, classement, points):
+		"""displays all players info"""
 
+		for player_information_dict in players_list:
+			print(f"{identifiant}, {nom}, {prénom}, {age}, {classement}, {points}".join(**player_information_dict))
+		pick_player_id()
 
 	def pick_player_id(self, identifiant):
-		"""request inout of user id"""
+		"""request input of user id"""
 		returned_input = int(input("Indiquez l'identifiant du joueur pour le modifier: "))
 		return returned_input
 
@@ -34,30 +37,15 @@ class PlayerPick:
 		"""check validity of user input"""
 		playerid = self.pick_player_id(identifiant)
 		while playerid not in list(range(1,9)):
-			print("Oups, cet identifiant n'est pas correct, réessayez : ")
+			print("Oups, cet identifiant n'est pas correct; il doit être entre 1 et 8, réessayez : ")
 			playerid = self.pick_player_id(identifiant)
 		else:
-			print(f"joueur{identifiant} a été choisi, que voulez-vous modifier ? ")
+			pick_player_info(identifiant)
 
-	def pick_player_info(self):
+	def pick_player_info(self, identifiant):
+		print(f"joueur{identifiant} a été choisi, que voulez-vous modifier ? ")
 
-		
 
-
+class PlayerModification():
+	pass
 	
-class MainPlayerMenu:
-	def __init__(self):
-		pass
-		
-	def players_main_page_options(self):
-		"""display the list of players"""
-		print("[h] Retour à l'accueil")
-		print("Choisissez le numéro du joueur à modifier")
-	
-	def players_main_page_(self):
-		pass
-
-
-
-#I need to define and and initiate players
-#also be able to modify one, so i need to pick it first and then modify it

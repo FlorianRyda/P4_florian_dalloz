@@ -1,4 +1,5 @@
-import models.players
+#import chess_tournament.models.players
+
 class HomeMenuPage: 
 	
 	@classmethod
@@ -14,6 +15,5 @@ class HomeMenuPage:
 		"""display the list of players"""
 		print("[h] Retour à l'accueil")
 		print("Choisissez le numéro du joueur à modifier")
-		pass
 
 

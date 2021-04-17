@@ -1,5 +1,4 @@
-import views.menus
-import controllers.application
+from chess_tournament.controllers.application import launch_home_menu
 
 if __name__ == "__main__":
-    application.launch_home_menu()
+    launch_home_menu()

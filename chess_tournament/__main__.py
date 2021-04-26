@@ -1,4 +1,5 @@
-from chess_tournament.controllers.application import launch_home_menu
+from chess_tournament.app import Application
+
 
 if __name__ == "__main__":
-    launch_home_menu()
+    Application().run()

@@ -1,8 +1,55 @@
 from chess_tournament.controllers.home_controller import HomePageController
 from chess_tournament.models.players import Player
 from chess_tournament.controllers.player_controller import PlayerController
+from chess_tournament.controllers.tournament_controller import TournamentController
+from chess_tournament.models.tournaments import Tournament
+
 import subprocess as sp
 import json
+
+from tinydb import TinyDB, Query
+
+
+class Store:
+    def __init__(self):
+        self.db = TinyDB('players.json')
+        self.data = self.db.all()
+        # import ipdb; ipdb.set_trace()
+
+        
+        self.data = {
+        "players": [
+         Player(1, "Dalloz", "Florian", "12/04/1990", "h", 0),
+        Player(2, "Dumont", "Claude", "15/09/2014", "h", 0),
+        Player(3, "Jung", "Kuarl", "05/01/1970", "h", 0)
+        ],
+        "tournaments" : [
+            Tournament("premier", "Champigny", "12/04/2021", 
+                                "15/04/2021", 4,[], [1,2,3,4,5,6,7,8], "Blitz", 
+                                "tournoi test")]
+        }
+
+    def get_player(self, player_id):
+        return next(p for p in self.data["players"] if p.id == player_id)
+
+    def get_all_players(self):
+        return self.data["players"]
+
+    def add_player(self, player):
+        self.data["players"].append(player)
+
+    def get_all_tournaments(self):
+        return self.data["tournaments"]
+
+    def get_tournament(self, tournament_name):
+        return next(p for p in self.data["tournaments"] if p.name == tournament_name)
+
+    def create_tournament(self, tournament):
+        self.data["tournaments"].append(tournament)
+
+
+
+
 
 
 class Application:
@@ -14,20 +61,18 @@ class Application:
         "view_player": PlayerController.view,
         "delete_player": PlayerController.delete,
         "update_player": PlayerController.update,
-        "list_tournaments": print("nothing yet")
+        "view_tournament": TournamentController.detail_tournament,
+        "create_tournament": TournamentController.create_tournament,
+        "list_tournaments": TournamentController.list_tournaments,
+        "update_old_tournament": TournamentController.update_old_tournament,
+        "rounds_details": TournamentController.rounds_details
     }
 
     def __init__(self) -> None:
         self.route = "homepage"
         self.exit = False
         self.route_params = None
-        self.store = {
-            "players": [
-                Player(1, "Dalloz", "Florian", "12/04/1990", "h", 0),
-                Player(2, "Dumont", "Claude", "15/09/2014", "h", 0),
-                Player(3, "Jung", "Karl", "05/01/1970", "h", 0)
-            ]
-        }
+        self.store = Store()
 
     def run(self):
         while not self.exit:

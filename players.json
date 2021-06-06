@@ -1,0 +1,4 @@
+{"players": [{"id": 1, "lastname": "Dalloz", "firstname": "Serge", "birth": "12/04/1990", "gender": "h", "ranking": 0}, {"id": 2, "lastname": "Xiu", "firstname": "Lang", "birth": "25/05/2000", "gender": "f", "ranking": 0}, {"id": 3, "lastname": "Hart", "firstname": "Friedrich", "birth": "12/08/1985", "gender": "h", "ranking": 0}, {"id": 4, "lastname": "Kulievski", "firstname": "Sacha", "birth": "05/11/1995", "gender": "h", "ranking": 0}], "_default": {"1": {"type": "apple", "count": 7}},
+"tournaments": [{"name" : "Premier tournoi", "place" : "Champigny", "start" : "12/04/2021", 
+"end" : "15/04/2021", "rounds" : 4, "players_ids" : [1,2,3,4,5,6,7,8], "time" : "Blitz", 
+"description" : "tournoi test"}]}

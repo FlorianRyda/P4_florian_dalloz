@@ -2,7 +2,7 @@ class PlayerView:
 
     @classmethod
     def display_list(cls, players):
-        print("\tID\tLastName\tFirstName\tBirth\tGender\tRanking")
+        print("\tID\t\tLastName\t\tFirstName\tBirth\tGender\tRanking")
         for player in players:
             print(f"\t{player.id}\t{player.lastname}\t{player.firstname}\t{player.birth}\t{player.gender}\t{player.ranking}")
 
@@ -37,20 +37,24 @@ class PlayerView:
     @classmethod
     def create_new_player(cls):
         return {
-            "id": input("Enter an ID: "),
-            "last name": input("Enter a last name: "),
-            "first name": input("Enter a first name: "),
-            "birth": input("Enter a birth date: "),
-            "gender": input("Enter a gender: "),
-            "ranking": input("Enter a ranking: ")
+            "id": input("Entrez un identifiant : "),
+            "lastname": input("Entrez un nom de famille : "),
+            "firstname": input("Entrez un prénom : "),
+            "birth": input("Entrez une date de naissance : "),
+            "gender": input("Entrez un genre : "),
+            "ranking": input("Entrez un classement : ")
         }
 
     @classmethod
     def update_player(cls, player):
-        return {"player_id": input(f"Indiquez l'identifiant [{player.id}]: "),
-        "last_name": input(f"Indiquez le nom de famille [{player.firstname}]: "),
-        "first_name": input(f"Indiquez le prénom [{player.lastname}]: "),
-        "naissance": input(f"Indiquez la date de naissance [{player.birth}]: "),
-        "sexe": input(f"Indiquez le sexe [{player.gender}]: "),
-        "classement": input(f"Indiquez le classement [{player.ranking}]: ")
+        return {"id": input(f"Indiquez l'identifiant [{player.id}]: "),
+        "lastname": input(f"Indiquez le nom de famille [{player.firstname}]: "),
+        "firstname": input(f"Indiquez le prénom [{player.lastname}]: "),
+        "birth": input(f"Indiquez la date de naissance [{player.birth}]: "),
+        "gender": input(f"Indiquez le sexe [{player.gender}]: "),
+        "ranking": input(f"Indiquez le classement [{player.ranking}]: ")
         }
+
+    
+    
+

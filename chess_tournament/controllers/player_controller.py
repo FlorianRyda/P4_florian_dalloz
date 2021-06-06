@@ -6,7 +6,7 @@ class PlayerController:
 
     @classmethod
     def list(cls, store, route_params=None):
-        choice, player_id = PlayerView.display_list(store["players"])
+        choice, player_id = PlayerView.display_list(store.get_all_players())
 
         if choice == "1":
             return "view_player", player_id
@@ -21,7 +21,7 @@ class PlayerController:
         elif choice.lower() == "h":
             return "homepage", None
         else:
-            raise Exception("invalid choice")
+            raise Exception("Choix non valide, veuillez réessayer")
 
     @classmethod
     def create(cls, store, route_params=None):
@@ -32,9 +32,11 @@ class PlayerController:
         # player = Player(id=data["id"], name=data["name"], age=data["age"])
         # but it's easier to use `**` to pass the arguments
         player = Player(**data)
-
-        # we add the player to the store
-        store["players"].append(player)
+        if player.is_valid():
+            # we add the player to the store
+            store.add_player(player)
+        else :
+            print("Informations du joueur non valide.")
 
         return "list_player", None
 
@@ -52,8 +54,8 @@ class PlayerController:
         Display one single player, the route_params correspond to the player ID
         we want to display
         """
-        # search the player on the store
-        player = next(p for p in store["players"] if p.id == route_params)
+        # search the player in the store
+        player = store.get_player(route_params)
 
         # we pass the player to the view that will display the player info and
         # the next options
@@ -73,3 +75,4 @@ class PlayerController:
         player.update(**data)
 
         return "list_player", None
+

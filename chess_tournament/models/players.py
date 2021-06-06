@@ -7,11 +7,12 @@ class Player:
 		self.birth = birth
 		self.gender = gender
 		self.ranking = ranking
+
 		
 	def __repr__(self):
-		return f"Player #{self.id} {self.firstname} {lastname}" 
+		return f"Player #{self.id} {self.firstname} {self.lastname}" 
 
-	def update(self, id, name, age, email):
+	def update(self, id, lastname, firstname, birth, gender, ranking):
 		self.id = id
 		self.lastname = lastname
 		self.firstname = firstname
@@ -21,6 +22,7 @@ class Player:
 
 	def is_valid(self):
 		return True
+			
 
 
 class PlayerManager:
@@ -28,7 +30,11 @@ class PlayerManager:
 		self.store = store
 
 	def get_player(self, player_id):
-		return next(p for p in self.store["players"] if p.id == player_id)
+		return next(p for p in self.store.data["players"] if p.id == player_id)
 
 	def get_all(self):
 		return self.store["players"]
+
+	
+
+			

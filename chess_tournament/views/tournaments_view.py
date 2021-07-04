@@ -9,6 +9,7 @@ class TournamentView:
         print("1. Consulter Tournoi")
         print("2. Nouveau tournoi")
         print("3. modifier tournoi")
+        print("4. Reprendre Tournoi")
         print("Q. Quitter programme")
         print("H. Page d'accueil")
 
@@ -26,14 +27,17 @@ class TournamentView:
         print(f"Lieu: {tournament.place}")
         print(f"Date debut: {tournament.start}")
         print(f"Date fin: {tournament.end}")
-        print(f"Nombre de Rounds: {tournament.round_num}")
         print(f"Id de Joueurs: {tournament.players_ids}")#players id here
         print(f"Controle temps: {tournament.time}")
         print(f"Description: {tournament.description}")
         print("")
-        print("R. Reprendre Tournoi")
+        if not tournament.rounds:
+            print("C. Créer premier round.")
+        if len(tournament.players) < 8:
+            print("a. ajouter joueurs au tournoi")
         print("Q. Quitter")
         print("H. Page d'accueil")
+        print("")
         return input("Votre Choix:")
 
     @classmethod
@@ -43,8 +47,7 @@ class TournamentView:
             "place": input("Entrez un lieu: "),
             "start": input("Entrez une date de début (jj/mm/dddd): "),
             "end": input("Entrez une date de fin (jj/mm/dddd): "),
-            "rounds": input("Entrez le nombre de rounds: "),
-            "players_ids": input("Entrez les id de joueurs: "),
+            "players": input("Entrez les id de joueurs: "),
             "time": input("Entrez le contrôle du temps: "),
             "description": input("Entrez une description: ")
         }
@@ -62,4 +65,6 @@ class TournamentView:
             "description": input(f"Entrez une description: [{tournament.description}]")
             }
 
-    
+    @classmethod
+    def test_print(cls):
+        print("yeah looks good")

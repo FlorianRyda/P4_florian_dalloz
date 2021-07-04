@@ -2,7 +2,8 @@ from chess_tournament.controllers.home_controller import HomePageController
 from chess_tournament.models.players import Player
 from chess_tournament.controllers.player_controller import PlayerController
 from chess_tournament.controllers.tournament_controller import TournamentController
-from chess_tournament.models.tournaments import Tournament
+from chess_tournament.models.tournaments import Tournament, Round, Match
+from chess_tournament.views.tournaments_view import TournamentView
 
 import subprocess as sp
 import json
@@ -15,19 +16,39 @@ class Store:
         self.db = TinyDB('players.json')
         self.data = self.db.all()
         # import ipdb; ipdb.set_trace()
-
+        round1 = Round("Round1")
+        round1.end()
+        player1 = Player(1, "Dalloz", "Florian", "12/04/1990", "h", 100)
+        player2 = Player(2, "Dumont", "Claude", "15/09/2014", "h", 50)
+        player3 = Player(3, "Jung", "Kuarl", "05/01/1970", "h", 105),
+        player4 = Player(4, "Lebret", "Jacques", "05/11/1987", "h", 200),
+        player5 = Player(5, "Tati", "Alexandre", "08/01/1971", "h", 25),
+        player6 = Player(6, "Lezehar", "Nina", "12/01/1954", "f", 45),
+        player7 = Player(7, "Diallo", "Aminata", "08/08/1969", "f", 10),
+        player8 = Player(8, "Carmin", "Elodie", "15/06/1999", "f",90)
+        
+        match = Match(player1, player2)
+       
         
         self.data = {
         "players": [
-         Player(1, "Dalloz", "Florian", "12/04/1990", "h", 0),
-        Player(2, "Dumont", "Claude", "15/09/2014", "h", 0),
-        Player(3, "Jung", "Kuarl", "05/01/1970", "h", 0)
+         player1,
+        player2,
+        player3,
+        player4,
+        player5,
+        player6,
+        player7,
+        player8
         ],
         "tournaments" : [
             Tournament("premier", "Champigny", "12/04/2021", 
-                                "15/04/2021", 4,[], [1,2,3,4,5,6,7,8], "Blitz", 
-                                "tournoi test")]
+                                "15/04/2021", [player1,player2,player3,player4,player5,player6,player7,player8], "Blitz", 
+                                "tournoi test"),
+                                ]
         }
+
+        
 
     def get_player(self, player_id):
         return next(p for p in self.data["players"] if p.id == player_id)
@@ -65,7 +86,9 @@ class Application:
         "create_tournament": TournamentController.create_tournament,
         "list_tournaments": TournamentController.list_tournaments,
         "update_old_tournament": TournamentController.update_old_tournament,
-        "rounds_details": TournamentController.rounds_details
+        "create_first_round": TournamentController.create_first_round,
+        "view_first_round": TournamentView.test_print
+        # "rounds_details": TournamentController.list_rounds
     }
 
     def __init__(self) -> None:

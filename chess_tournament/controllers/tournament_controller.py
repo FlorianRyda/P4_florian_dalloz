@@ -1,5 +1,6 @@
-from chess_tournament.models.tournaments import Tournament, TournamentManager
+from chess_tournament.models.tournaments import Tournament, TournamentManager, Round, Match
 from chess_tournament.views.tournaments_view import TournamentView
+import datetime
 
 class TournamentController:
 
@@ -26,10 +27,13 @@ class TournamentController:
         data = TournamentView.create_tournament()
         tournament = Tournament(**data)
 
+        TournamentController.create_first_round(tournament)
+
         if tournament.is_valid():
             store.create_tournament(tournament)
         else:
             print("Informations du tournoi non valides.")
+
 
         return "list_tournaments", None
 
@@ -52,9 +56,25 @@ class TournamentController:
             return "quit", None
         elif choice.lower() == "h":
             return "homepage", None
-        elif choice.lower == "r":
+        elif choice.lower() == "r":
             return "rounds_details", None
+        elif not tournament.round and choice.lower() == "c":
+            return "create_first_round", tournament
+        if len(store.players) == 8:
+            if choice.lower() == "a":
+                return "add_tournament_player", tournament
+            #create dynamic page with remaining players
+
+    @classmethod
+    def create_first_round(self, tournament):
+        tournament.generate_1st_round()
+
+        return "view_tournament", tournament.name
+
+    def create_next_round(cls, tournament):
+        second_round = Round("Round2")
+        second_round.matches = tournament.generate_matches
+        tournament.rounds.append(second_round)
 
 
-    def rounds_details(self):
-        pass  
+    

@@ -1,12 +1,14 @@
+import datetime
+from operator import attrgetter
+
 class Tournament:
-	def __init__(self, name, place, start, end, round_num, rounds, players_ids, time, description):
+	def __init__(self, name, place, start, end, players, time, description):
 		self.name = name
 		self.place = place
 		self.start = start
-		self.end = end 
-		self.round_num = round_num
-		self.rounds = rounds
-		self.players_ids = players_ids
+		self.end = end
+		self.rounds = []
+		self.players = players
 		self.time = time
 		self.description = description
 
@@ -15,6 +17,24 @@ class Tournament:
 
 	def is_valid(self):
 		return True
+
+	def generate_1st_round(self):
+	
+		first_round = Round("Round1")
+        #generate matches
+		#matching algorithm
+		#create 4 instances of Match
+		ordered_players = sorted(self.players, key=attrgetter("ranking"))
+		first_list = ordered_players[0:3]
+		second_list = ordered_players[4:8]
+		print(first_list)
+		print(second_list)
+			
+		tournament.rounds.append(first_round)
+		return "view_first_round"
+	
+
+
 
 
 class TournamentManager:
@@ -27,13 +47,28 @@ class TournamentManager:
 	def get_all_tournaments(self):
 		return self.store["tournaments"]
 
-class round:
-	def __init__(self, round_name, datetime_start, datetime_end, **matches):
+class Round:
+	def __init__(self, round_name):
 		self.round_name = round_name
-		self.datetime_start = datetime_start
-		self.datetime_end = datetime_end
-		self.matches = matches
+		self.datetime_start = datetime.datetime.now()
+		self.datetime_end = None
+		self.matches = []
 
+	def __repr__(self):
+		return f"{self.round_name}"
+
+	def end(self):
+		self.datetime_end = datetime.datetime.now()
+
+class Match:
+	def __init__(self, player1, player2):
+		self.player1 = player1
+		self.player2 = player2
+		self.score1 = None
+		self.score2 = None
+
+
+		
 
 # TOURS/MATCHS
 # Chaque tour est une liste de matchs. Chaque match consiste en une paire de joueurs 

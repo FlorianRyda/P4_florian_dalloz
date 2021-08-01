@@ -1,19 +1,18 @@
 import datetime
 from operator import attrgetter
 
+
 class Tournament:
-	def __init__(self, name, place, start, end, players, time, description):
+	def __init__(self, name, place, start, end, time, description):
 		self.name = name
 		self.place = place
 		self.start = start
 		self.end = end
 		self.rounds = []
-		self.players = players
+		self.players = []
 		self.time = time
 		self.description = description
 
-	def __repr__(self):
-		return f"Informations tournoi - nom:{self.name}, lieu: {self.place}, date de début: {self.start}"
 
 	def is_valid(self):
 		return True

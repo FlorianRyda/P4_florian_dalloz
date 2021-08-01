@@ -1,10 +1,12 @@
+
+
 class TournamentView:
 
     @classmethod
     def display_list_tournaments(cls, tournaments):
-        print("\tname\t\tplace\t\tstart\tend\trounds")
+        print("name\t\tplace\t\tstart\tend\trounds")
         for tournament in tournaments:
-            print(f"\t{tournament.name}\t{tournament.place}\t{tournament.start}\t\t{tournament.end}\t{tournament.rounds}")
+            print(f"{tournament.name}\t{tournament.place}\t{tournament.start}\t\t{tournament.end}\t{tournament.rounds}")
 
         print("1. Consulter Tournoi")
         print("2. Nouveau tournoi")
@@ -27,7 +29,7 @@ class TournamentView:
         print(f"Lieu: {tournament.place}")
         print(f"Date debut: {tournament.start}")
         print(f"Date fin: {tournament.end}")
-        print(f"Id de Joueurs: {tournament.players_ids}")#players id here
+        #print(f"Id de Joueurs: {tournament.players_ids}")
         print(f"Controle temps: {tournament.time}")
         print(f"Description: {tournament.description}")
         print("")
@@ -47,7 +49,6 @@ class TournamentView:
             "place": input("Entrez un lieu: "),
             "start": input("Entrez une date de début (jj/mm/dddd): "),
             "end": input("Entrez une date de fin (jj/mm/dddd): "),
-            "players": input("Entrez les id de joueurs: "),
             "time": input("Entrez le contrôle du temps: "),
             "description": input("Entrez une description: ")
         }
@@ -60,11 +61,24 @@ class TournamentView:
             "start": input(f"Entrez une date de début (jj/mm/dddd): [{tournament.start}]"),
             "end": input(f"Entrez une date de fin (jj/mm/dddd): [{tournament.end}]"),
             "rounds": input(f"Entrez le nombre de rounds: [{tournament.rounds}]"),
-            "players_ids": input(f"Entrez les id de joueurs: [{tournament.players_ids}]"),
             "time": input(f"Entrez le contrôle du temps: [{tournament.time}]"),
             "description": input(f"Entrez une description: [{tournament.description}]")
             }
 
     @classmethod
-    def test_print(cls):
-        print("yeah looks good")
+    def add_player_tournament(cls):
+        print("Ajout d'un joueur :")
+        return{
+        "id": input("Entrez un identifiant : "),
+        "lastname": input("Entrez un nom de famille : "),
+        "firstname": input("Entrez un prénom : "),
+        "birth": input("Entrez une date de naissance : "),
+        "gender": input("Entrez un genre : "),
+        "ranking": input("Entrez un classement : ")
+        }
+
+
+    
+
+
+        

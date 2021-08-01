@@ -5,7 +5,8 @@ from chess_tournament.views.player_view import PlayerView
 class PlayerController:
 
     @classmethod
-    def list(cls, store, route_params=None):
+    def list_players(cls, store, route_params=None):
+        
         choice, player_id = PlayerView.display_list(store.get_all_players())
 
         if choice == "1":

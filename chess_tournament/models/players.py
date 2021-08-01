@@ -10,7 +10,7 @@ class Player:
 
 		
 	def __repr__(self):
-		return f"Player #{self.id} {self.firstname} {self.lastname}" 
+		return f"Player #{self.id} {self.firstname} {self.lastname} {self.birth} {self.gender} {self.ranking}" 
 
 	def update(self, id, lastname, firstname, birth, gender, ranking):
 		self.id = id

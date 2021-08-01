@@ -13,18 +13,18 @@ from tinydb import TinyDB, Query
 
 class Store:
     def __init__(self):
-        self.db = TinyDB('players.json')
-        self.data = self.db.all()
-        # import ipdb; ipdb.set_trace()
+        #self.db = TinyDB('players.json')
+        #self.data = self.db.all()
+        
         round1 = Round("Round1")
         round1.end()
         player1 = Player(1, "Dalloz", "Florian", "12/04/1990", "h", 100)
         player2 = Player(2, "Dumont", "Claude", "15/09/2014", "h", 50)
-        player3 = Player(3, "Jung", "Kuarl", "05/01/1970", "h", 105),
-        player4 = Player(4, "Lebret", "Jacques", "05/11/1987", "h", 200),
-        player5 = Player(5, "Tati", "Alexandre", "08/01/1971", "h", 25),
-        player6 = Player(6, "Lezehar", "Nina", "12/01/1954", "f", 45),
-        player7 = Player(7, "Diallo", "Aminata", "08/08/1969", "f", 10),
+        player3 = Player(3, "Jung", "Karl", "05/01/1970", "h", 105)
+        player4 = Player(4, "Lebret", "Jacques", "05/11/1987", "h", 200)
+        player5 = Player(5, "Tati", "Alexandre", "08/01/1971", "h", 25)
+        player6 = Player(6, "Lezehar", "Nina", "12/01/1954", "f", 45)
+        player7 = Player(7, "Diallo", "Aminata", "08/08/1969", "f", 10)
         player8 = Player(8, "Carmin", "Elodie", "15/06/1999", "f",90)
         
         match = Match(player1, player2)
@@ -43,10 +43,12 @@ class Store:
         ],
         "tournaments" : [
             Tournament("premier", "Champigny", "12/04/2021", 
-                                "15/04/2021", [player1,player2,player3,player4,player5,player6,player7,player8], "Blitz", 
+                                "15/04/2021", "Blitz", 
                                 "tournoi test"),
                                 ]
         }
+        self.data["tournaments"][0].players = self.data["players"][:7]
+    
 
         
 
@@ -63,6 +65,7 @@ class Store:
         return self.data["tournaments"]
 
     def get_tournament(self, tournament_name):
+        print(tournament_name)
         return next(p for p in self.data["tournaments"] if p.name == tournament_name)
 
     def create_tournament(self, tournament):
@@ -77,7 +80,7 @@ class Application:
 
     routes = {
         "homepage": HomePageController.dispatch,
-        "list_player": PlayerController.list,
+        "list_player": PlayerController.list_players,
         "new_player": PlayerController.create,
         "view_player": PlayerController.view,
         "delete_player": PlayerController.delete,
@@ -87,8 +90,9 @@ class Application:
         "list_tournaments": TournamentController.list_tournaments,
         "update_old_tournament": TournamentController.update_old_tournament,
         "create_first_round": TournamentController.create_first_round,
-        "view_first_round": TournamentView.test_print
-        # "rounds_details": TournamentController.list_rounds
+        "add_tournament_player": TournamentController.add_tournament_player,
+        "add_player_tournament": TournamentView.add_player_tournament
+        #to create in tournament controller
     }
 
     def __init__(self) -> None:

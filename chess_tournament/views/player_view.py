@@ -2,9 +2,9 @@ class PlayerView:
 
     @classmethod
     def display_list(cls, players):
-        print("\tID\t\tLastName\t\tFirstName\tBirth\tGender\tRanking")
+        print("\tID FirstName LastName Birth Gender Ranking")
         for player in players:
-            print(f"\t{player.id}\t{player.lastname}\t{player.firstname}\t{player.birth}\t{player.gender}\t{player.ranking}")
+            print(player)
 
         print("1. View Player")
         print("2. New Player")

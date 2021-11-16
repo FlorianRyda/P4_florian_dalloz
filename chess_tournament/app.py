@@ -10,6 +10,7 @@ import json
 
 from tinydb import TinyDB, Query
 
+import ipdb
 
 class Store:
     def __init__(self):
@@ -91,8 +92,9 @@ class Application:
         "update_old_tournament": TournamentController.update_old_tournament,
         "create_first_round": TournamentController.create_first_round,
         "add_tournament_player": TournamentController.add_tournament_player,
-        "add_player_tournament": TournamentView.add_player_tournament
-        #to create in tournament controller
+        "add_player_tournament": TournamentController.add_tournament_player,
+        "view_current_round": TournamentController.control_current_round,
+        "create_next_round": TournamentController.create_next_round
     }
 
     def __init__(self) -> None:
@@ -114,8 +116,10 @@ class Application:
             # Every controller should return two things:
             # - the next route to display
             # - the parameters needed for the next route
+            # ipdb.set_trace()
             next_route, next_params = controller_method(
                 self.store, self.route_params
+                
             )
 
             # set the next route and input

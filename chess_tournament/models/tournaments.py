@@ -1,5 +1,6 @@
 import datetime
 from operator import attrgetter
+import ipdb
 
 
 class Tournament:
@@ -12,6 +13,12 @@ class Tournament:
 		self.players = []
 		self.time = time
 		self.description = description
+		self.scores = {}
+
+	
+	def set_player_score(self, player_id, points):
+		self.scores[player_id] = self.scores.get(player_id, 0) + points
+		
 
 
 	def is_valid(self):
@@ -19,21 +26,56 @@ class Tournament:
 
 	def generate_1st_round(self):
 	
-		first_round = Round("Round1")
-        #generate matches
-		#matching algorithm
-		#create 4 instances of Match
+		match_list = []
 		ordered_players = sorted(self.players, key=attrgetter("ranking"))
-		first_list = ordered_players[0:3]
-		second_list = ordered_players[4:8]
-		print(first_list)
-		print(second_list)
-			
-		tournament.rounds.append(first_round)
-		return "view_first_round"
+		first_list = ordered_players[0:4]
+		second_list = ordered_players[4:9]
+
+		zipped_list = zip(first_list,second_list)
+		for player1, player2 in zipped_list:
+			match = Match(player1, player2)
+			match_list.append(match)
+		first_round = Round("Round1")
+		first_round.matches = match_list
+
+		self.rounds.append(first_round)
+
+	def generate_next_round(self):
+		#create new round instance with the right name automatically
+		current_round = Round("Round"+(str(len(self.rounds)+1)))
+		#sort by score and ranking 
+		tournament_players = self.players
+		sorted_players = tournament_players.sort(key=lambda x: (x.score, x.ranking), reverse=True)
+		ipdb.set_trace()
+		first_list = sorted_players[0:4]
+		second_list = sorted_players[4:9]
+		available_players = zip(first_list,second_list)
+
+		while available_players:
+			#extract first player
+			current_player = available_players.pop(0)
+			for i, available_player in enumerate(available_players):
+				if not self.tournament.has_played(current_player, available_player):
+					match = Match(current_player, available_player)
+					current_round.matches.append(match)
+					del available_players[i]
+					break
+				else:
+					match = Match(current_player, available_players[0])
+					current_round.matches.append(match)
+					del available_players[0]
+
+
+
+
+
+	def get_current_round(self):
+		return self.rounds[-1]
+
 	
 
 
+	
 
 
 class TournamentManager:
@@ -54,19 +96,46 @@ class Round:
 		self.matches = []
 
 	def __repr__(self):
-		return f"{self.round_name}"
+		return f"{self.round_name}: {self.matches}"
 
 	def end(self):
 		self.datetime_end = datetime.datetime.now()
+		
 
 class Match:
 	def __init__(self, player1, player2):
 		self.player1 = player1
 		self.player2 = player2
-		self.score1 = None
-		self.score2 = None
+		self.points1 = None
+		self.points2 = None
 
+	def __repr__(self):
+		return f"{self.player1} vs {self.player2}"
 
+	def player_one_won(self):
+		self.points1 = 1
+		self.points2 = 0
+
+	def player_two_won(self):
+		self.points1 = 0
+		self.points2 = 1
+	
+	def draw(self):
+		self.points1 = 0.5
+		self.points2 = 0.5
+
+	def is_finished(self):
+		return self.points1 is not None and self.points2 is not None
+
+	def has_played(self, player1, player2):
+		return self.is_finished() and player1 in (self.player1, self.player2) and player2 in (self.player1, self.player2)
+ 
+	
+
+		
+
+	# def __repr__(self):
+	# 	return f" Joueur 1 nom/score: {self.player1}/{self.score1}, Joueur 2 nom/score: {self.player2}/{self.score2}"
 		
 
 # TOURS/MATCHS

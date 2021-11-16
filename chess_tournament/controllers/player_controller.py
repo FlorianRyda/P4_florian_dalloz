@@ -43,7 +43,6 @@ class PlayerController:
 
     @classmethod
     def delete(cls, store, route_params):
-        # remove the player from the store
         store["players"] = [
             p for p in store["players"] if p.id != route_params
         ]
@@ -55,7 +54,6 @@ class PlayerController:
         Display one single player, the route_params correspond to the player ID
         we want to display
         """
-        # search the player in the store
         player = store.get_player(route_params)
 
         # we pass the player to the view that will display the player info and

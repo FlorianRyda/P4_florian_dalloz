@@ -7,7 +7,7 @@ class Tournament:
 	def __init__(self, name, place, start, end, time, description):
 		self.name = name
 		self.place = place
-		self.start = start
+		self.start = datetime.date.now()
 		self.end = end
 		self.rounds = []
 		self.players = []
@@ -19,8 +19,6 @@ class Tournament:
 	def set_player_score(self, player_id, points):
 		self.scores[player_id] = self.scores.get(player_id, 0) + points
 		
-
-
 	def is_valid(self):
 		return True
 
@@ -41,21 +39,20 @@ class Tournament:
 		self.rounds.append(first_round)
 
 	def generate_next_round(self):
-		#create new round instance with the right name automatically
 		current_round = Round("Round"+(str(len(self.rounds)+1)))
-		#sort by score and ranking 
-		tournament_players = self.players
-		sorted_players = tournament_players.sort(key=lambda x: (x.score, x.ranking), reverse=True)
 		ipdb.set_trace()
-		first_list = sorted_players[0:4]
-		second_list = sorted_players[4:9]
-		available_players = zip(first_list,second_list)
+		self.rounds.append(current_round)
+		#sort by score and ranking 
+		available_players = self.players.copy()
+		for player in available_players:
+				player.score = self.scores.get(player.id, 0)
+		available_players.sort(key=lambda x: (x.score, x.ranking), reverse=True)
 
 		while available_players:
 			#extract first player
 			current_player = available_players.pop(0)
 			for i, available_player in enumerate(available_players):
-				if not self.tournament.has_played(current_player, available_player):
+				if not self.has_played(current_player, available_player):
 					match = Match(current_player, available_player)
 					current_round.matches.append(match)
 					del available_players[i]
@@ -64,17 +61,33 @@ class Tournament:
 					match = Match(current_player, available_players[0])
 					current_round.matches.append(match)
 					del available_players[0]
+		
+				#need to check if everything works now until we reach 4 rounds
+				#need to use the end round method as well
+				#finally, you need to check input info when tournament is created
+    
+	def has_played(self, player1, player2):
+		for round in self.rounds:
+			if round.has_played(player1, player2):
+				return True
+		return False
 
+	def is_finished(self):
+		return all(round.is_finished() for round in self.rounds)
 
-
-
-
-	def get_current_round(self):
-		return self.rounds[-1]
-
+	# def set_start_time(self):
+	# 	self.start = datetime.date.now()
 	
+	def set_end_time(self):
+		self.end = datetime.date.now()
+		
 
-
+	@property
+	def current_round(self):
+		if self.rounds:
+			return self.rounds[-1]
+		
+	
 	
 
 
@@ -100,6 +113,15 @@ class Round:
 
 	def end(self):
 		self.datetime_end = datetime.datetime.now()
+
+	def has_played(self, player1, player2):
+		for match in self.matches:
+			if match.has_played(player1, player2):
+				return True
+		return False
+
+	def is_finished(self):
+		return all(match.is_finished() for match in self.matches)
 		
 
 class Match:
@@ -129,7 +151,7 @@ class Match:
 
 	def has_played(self, player1, player2):
 		return self.is_finished() and player1 in (self.player1, self.player2) and player2 in (self.player1, self.player2)
- 
+
 	
 
 		

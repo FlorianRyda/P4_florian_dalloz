@@ -26,33 +26,88 @@ class TournamentView:
 
     @classmethod
     def detail_tournament(cls, tournament, store):
-        print("liste des joueurs :")
-        for player in store.data["players"]:
-            print(player)
+
         print("Détails du tournoi:")
         print("")
         print(f"nom: {tournament.name}")
         print(f"Lieu: {tournament.place}")
         print(f"Date debut: {tournament.start}")
         print(f"Date fin: {tournament.end}")
-        #print(f"Id de Joueurs: {tournament.players_ids}")
         print(f"Controle temps: {tournament.time}")
         print(f"Description: {tournament.description}")
         print("")
-        for round in tournament.rounds:
-            print(f"{round.round_name} est terminé")
-        print("")
-        if not tournament.rounds:
-            print(u"C. Créer premier round.")
-        if tournament.rounds:
-            print("S. Créer round suivant.")
-        if len(store.data["players"]) < 8:
-            print("A. ajouter joueur(s) au tournoi")
-        print("Q. Quitter")
-        print("H. Page d'accueil")
-        print("")
-        return input("Votre Choix:")
 
+        print("liste des joueurs du tournoi:")
+        for player in store.data["players"]:
+            print(player)
+        print("")
+
+        print("Liste des Rounds: ")
+        if tournament.rounds:
+            for round in tournament.rounds:
+                print("")
+                print(f"{round.round_name}:")
+                for match in round.matches:
+                    if not match.points1 and not match.points2:
+                        print(f"{match.player1} vs {match.player2} en attente de résultats")
+                    else:
+                        print(f"{match.player1} vs {match.player2}")
+                        print(f"{match.points1} vs {match.points2}")
+        if not tournament.rounds:
+            print("Aucun round créé")
+            print(u"C. Créer le premier round.")
+        elif len(store.data["players"]) < 8:
+            print("A. ajouter joueur(s) au tournoi")
+        elif tournament.is_finished() and len(tournament.rounds) == 4:
+            tournament.set_end_time()
+            print("Tournoi terminé !")
+        elif not tournament.current_round.is_finished():
+            print("")
+            current_round = tournament.current_round
+            if current_round.matches:
+                print("Etat du round en cours: ")
+                for i, match in enumerate(current_round.matches):
+                    if match.points1 or match.points2:
+                        print(f"Match {str(i+1)} terminé.")
+                    else:
+                        print(f"Match {str(i+1)} en attente de résultats.")
+                print("")
+
+
+                if not current_round.matches[0].is_finished():
+                    print(f"1. Jouer le match {current_round.matches[0]}")
+                if not current_round.matches[1].is_finished():
+                    print(f"2. Jouer le match {current_round.matches[1]}")
+                if not current_round.matches[2].is_finished():
+                    print(f"3. Jouer le match {current_round.matches[2]}")
+                if not current_round.matches[3].is_finished():
+                    print(f"4. Jouer le match {current_round.matches[3]}")
+                choice = input("Votre choix: ")
+
+                return "play_match", int(choice)-1
+               
+
+            print("")
+
+            
+        elif tournament.current_round.is_finished() and len(tournament.rounds) < 4:
+            print("S. Créer le round suivant.")
+        
+        print("H. Page d'accueil")
+        print("Q. Quitter le programme")
+
+        print("")
+        return input("Votre Choix:"), None
+    
+    @classmethod
+    def play_match(cls, match):
+        print(f"Entrez le résultat du match {match.player1} vs {match.player2}:")
+        print(f"1.{match.player1} gagne.")
+        print(f"2.{match.player2} gagne.")
+        print("3. Egalité.")
+        return input("Votre choix: ")
+
+    
     @classmethod
     def create_tournament(cls):
         return {
@@ -95,47 +150,6 @@ class TournamentView:
                 ids.append(id)
 
         return ids
-
-    @classmethod
-    def view_current_round(cls, current_round):
-        print("Informations du round en cours: ")
-        #print other round information
-        for i, match in enumerate(current_round.matches):
-            print("Match"+str(i+1)+". ")
-            if match.points1:
-                print(f"Match terminé.")
-            else:
-                print(f"Match à jouer.")
-        print("\n'q' pour quitter")
-        print("'h' pour retourner à l'écran d'accueil")
-        print("'t' pour retourner au tournoi en cours")
-        print("")
-
-        print("Scores du match en cours:")
-        print(f"{current_round.matches[0].player1} Point(s) {current_round.matches[0].points1}.")
-        print(f"{current_round.matches[0].player2} Point(s) {current_round.matches[0].points2}.")
-
-        print(f"{current_round.matches[1].player1} Point(s) {current_round.matches[1].points1}.")
-        print(f"{current_round.matches[1].player2} Point(s) {current_round.matches[1].points2}.")
-
-        print(f"{current_round.matches[2].player1} Point(s) {current_round.matches[2].points1}.")
-        print(f"{current_round.matches[2].player2} Point(s) {current_round.matches[2].points2}.")
-
-        print(f"{current_round.matches[3].player1} Point(s) {current_round.matches[3].points1}.")
-        print(f"{current_round.matches[3].player2} Point(s) {current_round.matches[3].points2}.")
-        print("\nMatchs à jouer:\n")
-        if not current_round.matches[0].is_finished():
-            print(f"1. Jouer le match {current_round.matches[0]}")
-        if not current_round.matches[1].is_finished():
-            print(f"2. Jouer le match {current_round.matches[1]}")
-        if not current_round.matches[2].is_finished():
-            print(f"3. Jouer le match {current_round.matches[2]}")
-        if not current_round.matches[3].is_finished():
-            print(f"4. Jouer le match {current_round.matches[3]}")
-        # if current_round.matches[0].is_finished() and current_round.matches[1].is_finished() and current_round.matches[2].is_finished() and current_round.matches[3].is_finished():
-        if all( i.is_finished() for i in current_round.matches):
-            print("Round terminé, veuillez retourner au tournoi en appuyant sur 't'.")
-        return input("\nchoisissez une option: ")
 
     @classmethod
     def view_selected_match(cls, match_num, match):

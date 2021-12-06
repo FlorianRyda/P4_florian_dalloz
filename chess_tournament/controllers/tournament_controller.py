@@ -37,7 +37,7 @@ class TournamentController:
 
         store.create_tournament(tournament)
         
-        return "create_first_round", tournament
+        return "view_tournament", tournament.name
 
     @classmethod
     def update_old_tournament(cls, store, tournament_name):
@@ -51,10 +51,12 @@ class TournamentController:
         return "list_tournaments", None
 
     @classmethod
-    def detail_tournament(cls, store, route_params):
+    def view_tournament(cls, store, route_params):
+    
         tournament = store.get_tournament(route_params)
-
-        choice = TournamentView.detail_tournament(tournament, store).lower()
+        
+        choice, param = TournamentView.detail_tournament(tournament, store)
+        choice = choice.lower()
         if choice == "q":
             return "quit", None
         elif choice == "h":
@@ -63,26 +65,54 @@ class TournamentController:
             return "rounds_details", None
         elif not tournament.rounds and choice == "c":
             return "create_first_round", tournament
-        elif tournament.rounds and choice == "s":
+        elif tournament.rounds and len(tournament.rounds) < 4 and choice == "s":
             return "create_next_round", tournament
-        
-        if len(store.data["players"]) < 8 and choice == "a":
+        elif len(tournament.rounds) == 4 and tournament.is_finished():
+            return "view_tournament", tournament.name
+        elif len(store.data["players"]) < 8 and choice == "a":
             return "add_tournament_player", tournament
-        
+        elif choice == "play_match":
+            return "play_match", (tournament, param)
+
+        else:
+            return "view_tournament", tournament.name
+
+    @classmethod
+    def play_match(cls, store, param):
+        tournament, match_index = param
+        match = tournament.current_round.matches[match_index]
+        result = TournamentView.play_match(match)
+        if result in ["1","2","3"]:
+            if result == "1":
+                match.player_one_won()
+            
+            elif result == "2":
+                match.player_two_won()
+                
+            elif result == "3":
+                match.draw()
+        else:
+            return "view_tournament", tournament.name
+
+        tournament.set_player_score(match.player1.id, match.points1)
+        tournament.set_player_score(match.player2.id, match.points2)
+        return "view_tournament", tournament.name
+           
 
     @classmethod
     def create_first_round(cls, store, tournament):
-    
+        
         tournament.generate_1st_round()
 
-        return "create_next_round", tournament
+        return "view_tournament", tournament.name
 
     @classmethod
     def create_next_round(cls, store, tournament):
     
         tournament.generate_next_round()
 
-        return "view_current_round", tournament
+        return "view_tournament", tournament.name
+
         
 
     @classmethod
@@ -92,34 +122,6 @@ class TournamentController:
         tournament = tournament.players.append(player)
         return "view_tournament", None
 
-    @classmethod
-    def control_current_round(cls, store, tournament):
-        current_round = Tournament.get_current_round(tournament)
-        choice = TournamentView.view_current_round(current_round).lower()
-        if choice == "q":
-            return "quit", None
-        elif choice == "h":
-            return "homepage", None
-        elif choice == "t":
-            return "view_tournament", tournament.name
-        
-        elif choice.isnumeric() and choice in ["1","2","3","4"]:
-            choice = int(choice)
-            match = current_round.matches[choice-1]
-            result = TournamentView.view_selected_match(choice, match)
-            if result == "1":
-                match.player_one_won()
-               
-            elif result == "2":
-                match.player_two_won()
-                
-            elif result == "3":
-                match.draw()
-
-            tournament.set_player_score(match.player1.id, match.points1)
-            tournament.set_player_score(match.player2.id, match.points2)
-            #go to creation of the next round immediately
-            return "view_tournament", tournament
-           
+    
 
     

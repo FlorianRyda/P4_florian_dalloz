@@ -86,15 +86,14 @@ class Application:
         "view_player": PlayerController.view,
         "delete_player": PlayerController.delete,
         "update_player": PlayerController.update,
-        "view_tournament": TournamentController.detail_tournament,
+        "view_tournament": TournamentController.view_tournament,
         "create_tournament": TournamentController.create_tournament,
         "list_tournaments": TournamentController.list_tournaments,
         "update_old_tournament": TournamentController.update_old_tournament,
         "create_first_round": TournamentController.create_first_round,
         "add_tournament_player": TournamentController.add_tournament_player,
-        "add_player_tournament": TournamentController.add_tournament_player,
-        "view_current_round": TournamentController.control_current_round,
-        "create_next_round": TournamentController.create_next_round
+        "create_next_round": TournamentController.create_next_round,
+        "play_match": TournamentController.play_match
     }
 
     def __init__(self) -> None:
@@ -116,7 +115,7 @@ class Application:
             # Every controller should return two things:
             # - the next route to display
             # - the parameters needed for the next route
-            # ipdb.set_trace()
+           
             next_route, next_params = controller_method(
                 self.store, self.route_params
                 

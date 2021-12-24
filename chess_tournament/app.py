@@ -14,63 +14,64 @@ import ipdb
 
 class Store:
     def __init__(self):
-        #self.db = TinyDB('players.json')
-        #self.data = self.db.all()
-        
-        round1 = Round("Round1")
-        round1.end()
-        player1 = Player(1, "Dalloz", "Florian", "12/04/1990", "h", 100)
-        player2 = Player(2, "Dumont", "Claude", "15/09/2014", "h", 50)
-        player3 = Player(3, "Jung", "Karl", "05/01/1970", "h", 105)
-        player4 = Player(4, "Lebret", "Jacques", "05/11/1987", "h", 200)
-        player5 = Player(5, "Tati", "Alexandre", "08/01/1971", "h", 25)
-        player6 = Player(6, "Lezehar", "Nina", "12/01/1954", "f", 45)
-        player7 = Player(7, "Diallo", "Aminata", "08/08/1969", "f", 10)
-        player8 = Player(8, "Carmin", "Elodie", "15/06/1999", "f",90)
-        
-        match = Match(player1, player2)
-       
-        
-        self.data = {
-        "players": [
-         player1,
-        player2,
-        player3,
-        player4,
-        player5,
-        player6,
-        player7,
-        player8
-        ],
-        "tournaments" : [
-            Tournament("premier", "Champigny", "12/04/2021", 
-                                "15/04/2021", "Blitz", 
-                                "tournoi test"),
-                                ]
-        }
-        self.data["tournaments"][0].players = self.data["players"][:7]
-    
+        self.data = {'players': [], 'tournaments': []}
+        self.db = TinyDB('database.json')
+        self.player_table = self.db.table('players')
+        self.tournaments_table = self.db.table('tournaments')
+      
+        players_dict = self.player_table.all()
+        for player_dict in players_dict:
+            self.data['players'].append(Player.from_dict(player_dict))
+   
 
+        tournaments_dict = self.tournaments_table.all()
+        for tournament_dict in tournaments_dict:
+            tournament = Tournament.from_dict(tournament_dict)
+            self.data['tournaments'].append(tournament)
+            rounds_dict = tournament_dict["rounds"]
+            for round_dict in rounds_dict:
+                round = Round.from_dict(round_dict)
+                tournament.rounds.append(round)
+                matches_dict = round_dict['matches']
+                ipdb.set_trace()
+                for match_dict in matches_dict:
+                    match_dict["player1"] = self.get_player(match_dict["player1"])
+                    match_dict["player2"] = self.get_player(match_dict["player2"])
+                    round.matches.append(Match.from_dict(match_dict))
+
+
+
+    def save_player(self, player):
+        player_query = Query()
+        self.player_table.upsert(player.to_dict(), player_query.id == player.id)
+    
+    def save_tournament(self, tournament):
+        tournament_query = Query()
+        self.tournaments_table.upsert(tournament.to_dict(), tournament_query.name == tournament.name)
+        
+    
         
 
     def get_player(self, player_id):
-        return next(p for p in self.data["players"] if p.id == player_id)
+        return next(p for p in self.data["players"] if str(p.id) == str(player_id))
+        # return next(p for p in self.store.data["players"][player_id] if str(p.id) == str(player_id))
 
     def get_all_players(self):
         return self.data["players"]
 
     def add_player(self, player):
         self.data["players"].append(player)
+        self.save_player(player)
 
     def get_all_tournaments(self):
         return self.data["tournaments"]
 
     def get_tournament(self, tournament_name):
-        print(tournament_name)
         return next(p for p in self.data["tournaments"] if p.name == tournament_name)
 
     def create_tournament(self, tournament):
         self.data["tournaments"].append(tournament)
+        self.save_tournament(tournament)
 
 
 
@@ -128,3 +129,4 @@ class Application:
             # if the controller returned "quit" then we end the loop
             if next_route == "quit":
                 self.exit = True
+

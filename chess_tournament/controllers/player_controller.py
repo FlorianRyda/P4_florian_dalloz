@@ -22,19 +22,15 @@ class PlayerController:
         elif choice.lower() == "h":
             return "homepage", None
         else:
-            raise Exception("Choix non valide, veuillez réessayer")
+            return "list_player", None
 
     @classmethod
     def create(cls, store, route_params=None):
         # call the view that will return us a dict with the new player info
         data = PlayerView.create_new_player()
 
-        # You could specify each argument like:
-        # player = Player(id=data["id"], name=data["name"], age=data["age"])
-        # but it's easier to use `**` to pass the arguments
         player = Player(**data)
         if player.is_valid():
-            # we add the player to the store
             store.add_player(player)
         else :
             print("Informations du joueur non valide.")
@@ -72,6 +68,6 @@ class PlayerController:
         data = PlayerView.update_player(player)
 
         player.update(**data)
-
+        store.save_player(player)
         return "list_player", None
 

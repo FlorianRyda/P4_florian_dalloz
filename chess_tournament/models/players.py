@@ -1,4 +1,4 @@
-
+import ipdb
 class Player:
 	def __init__(self, id, lastname, firstname, birth, gender, ranking):
 		self.id = id
@@ -22,6 +22,13 @@ class Player:
 
 	def is_valid(self):
 		return True
+
+	def to_dict(self):
+		return {'id': self.id, 'lastname': self.lastname, 'ranking' : self.ranking, 'firstname': self.firstname, 'gender' : self.gender, 'birth': self.birth}
+
+	@classmethod
+	def from_dict(cls, player_dict):
+		return cls(**player_dict)
 			
 
 
@@ -30,7 +37,7 @@ class PlayerManager:
 		self.store = store
 
 	def get_player(self, player_id):
-		return next(p for p in self.store.data["players"] if p.id == player_id)
+		return next(p for p in self.store.data["players"][player_id] if str(p.id) == str(player_id))
 
 	def get_all(self):
 		return self.store["players"]

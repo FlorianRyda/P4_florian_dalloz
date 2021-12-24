@@ -2,22 +2,23 @@ class PlayerView:
 
     @classmethod
     def display_list(cls, players):
-        print("\tID FirstName LastName Birth Gender Ranking")
+        print("Liste des joueurs")
+        print("veuillez créer au moins 8 joueurs pour lancer un tournoi")
         for player in players:
             print(player)
 
-        print("1. View Player")
-        print("2. New Player")
-        print("3. Delete Player")
-        print("4. Update Player")
-        print("Q. Exit")
-        print("H. Homepage")
+        print("1. Voir Joueur")
+        print("2. Nouveau Joueur")
+        print("3. Supprimer Joueur")
+        print("4. Modifier Joueur")
+        print("Q. Quitter le programme")
+        print("H. Page d'Accueil")
 
         choice = input("Choice:")
         extra_info = None
 
         if choice in ("1", "3", "4"):
-            extra_info = int(input("Enter Player Id:"))
+            extra_info = int(input("Entrez l'id du joueur:"))
 
         return choice, extra_info
 
@@ -36,6 +37,7 @@ class PlayerView:
 
     @classmethod
     def create_new_player(cls):
+        print("Entrez les informations du nouveau joueur")
         return {
             "id": input("Entrez un identifiant : "),
             "lastname": input("Entrez un nom de famille : "),

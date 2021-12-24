@@ -30,7 +30,11 @@ class TournamentController:
     def create_tournament(cls, store, route_params=None):
         data = TournamentView.create_tournament()
         tournament = Tournament(**data)
+
+        if not store.data['players']:
+            return "new_player", None
         player_ids = TournamentView.add_player_tournament(store.data["players"])
+        
         for player_id in player_ids:
             player = store.get_player(player_id)
             tournament.players.append(player)
@@ -45,7 +49,8 @@ class TournamentController:
 
         tournament = store.get_tournament(tournament_name)
         data = TournamentView.update_old_tournament(tournament)
-        Tournament.update(**data)
+        tournament.update(**data)
+        store.save_tournament(tournament)
 
 
         return "list_tournaments", None
@@ -96,6 +101,7 @@ class TournamentController:
 
         tournament.set_player_score(match.player1.id, match.points1)
         tournament.set_player_score(match.player2.id, match.points2)
+        store.save_tournament(tournament)
         return "view_tournament", tournament.name
            
 

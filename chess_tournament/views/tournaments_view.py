@@ -5,14 +5,13 @@ class TournamentView:
 
     @classmethod
     def display_list_tournaments(cls, tournaments):
-        print("name\t\tplace\t\tstart\tend\trounds")
+        print("Liste des tournois passés et en cours: ")
         for tournament in tournaments:
             print(f"{tournament.name}\t{tournament.place}\t{tournament.start}\t\t{tournament.end}\t{tournament.rounds}")
 
-        print("1. Consulter Tournoi")
+        print("1. Consulter/reprendre Tournoi")
         print("2. Nouveau tournoi")
         print("3. modifier tournoi")
-        print("4. Reprendre Tournoi")
         print("Q. Quitter programme")
         print("H. Page d'accueil")
 
@@ -41,8 +40,10 @@ class TournamentView:
         for player in store.data["players"]:
             print(player)
         print("")
+        # ipdb.set_trace()
 
         print("Liste des Rounds: ")
+        
         if tournament.rounds:
             for round in tournament.rounds:
                 print("")
@@ -72,7 +73,6 @@ class TournamentView:
                     else:
                         print(f"Match {str(i+1)} en attente de résultats.")
                 print("")
-
 
                 if not current_round.matches[0].is_finished():
                     print(f"1. Jouer le match {current_round.matches[0]}")
@@ -113,8 +113,6 @@ class TournamentView:
         return {
             "name": input("Entrez un nom: "),
             "place": input("Entrez un lieu: "),
-            "start": input("Entrez une date de début (jj/mm/dddd): "),
-            "end": input("Entrez une date de fin (jj/mm/dddd): "),
             "time": input("Entrez le contrôle du temps: "),
             "description": input("Entrez une description: ")
         }
@@ -124,9 +122,6 @@ class TournamentView:
         return {
             "name": input(f"Entrez un nom: [{tournament.name}]"),
             "place": input(f"Entrez un lieu: [{tournament.place}]"),
-            "start": input(f"Entrez une date de début (jj/mm/dddd): [{tournament.start}]"),
-            "end": input(f"Entrez une date de fin (jj/mm/dddd): [{tournament.end}]"),
-            "rounds": input(f"Entrez le nombre de rounds: [{tournament.rounds}]"),
             "time": input(f"Entrez le contrôle du temps: [{tournament.time}]"),
             "description": input(f"Entrez une description: [{tournament.description}]")
             }
@@ -142,12 +137,14 @@ class TournamentView:
                 print("Valeur invalide, l'id doit être un chiffre.")
                 continue
             id = int(id)
-            if id not in [p.id for p in players]:
+            
+            if id not in [int(p.id) for p in players]:
                 print("Joueur non trouvé, veuillez réessayer.")
             elif id in ids:
                 print("Joueur déjà sélectionné, ajoutez un autre joueur.")
             else:
                 ids.append(id)
+    
 
         return ids
 

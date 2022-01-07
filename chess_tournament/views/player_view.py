@@ -1,5 +1,4 @@
 class PlayerView:
-
     @classmethod
     def display_list(cls, players):
         print("Liste des joueurs")
@@ -44,19 +43,20 @@ class PlayerView:
             "firstname": input("Entrez un prénom : "),
             "birth": input("Entrez une date de naissance : "),
             "gender": input("Entrez un genre : "),
-            "ranking": input("Entrez un classement : ")
+            "ranking": input("Entrez un classement : "),
         }
 
     @classmethod
     def update_player(cls, player):
-        return {"id": input(f"Indiquez l'identifiant [{player.id}]: "),
-        "lastname": input(f"Indiquez le nom de famille [{player.firstname}]: "),
-        "firstname": input(f"Indiquez le prénom [{player.lastname}]: "),
-        "birth": input(f"Indiquez la date de naissance [{player.birth}]: "),
-        "gender": input(f"Indiquez le sexe [{player.gender}]: "),
-        "ranking": input(f"Indiquez le classement [{player.ranking}]: ")
+        return {
+            "id": input(f"Indiquez l'identifiant [{player.id}]: ") or player.id,
+            "lastname": input(f"Indiquez le nom de famille [{player.firstname}]: ")
+            or player.id,
+            "firstname": input(f"Indiquez le prénom [{player.lastname}]: ")
+            or player.id,
+            "birth": input(f"Indiquez la date de naissance [{player.birth}]: ")
+            or player.id,
+            "gender": input(f"Indiquez le sexe [{player.gender}]: ") or player.id,
+            "ranking": input(f"Indiquez le classement [{player.ranking}]: ")
+            or player.id,
         }
-
-    
-    
-

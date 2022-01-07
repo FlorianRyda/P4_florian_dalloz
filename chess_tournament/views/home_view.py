@@ -1,5 +1,4 @@
 class HomeView:
-
     @classmethod
     def home(cls):
         print("Bienvenu(e)\nVeuillez indiquer votre choix puis presser 'Entree'")

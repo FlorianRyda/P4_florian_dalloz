@@ -2,7 +2,6 @@ from chess_tournament.views.home_view import HomeView
 
 
 class HomePageController:
-
     @classmethod
     def dispatch(cls, store=None, input=None):
         choice = HomeView.home()
@@ -12,6 +11,6 @@ class HomePageController:
             next = "list_player"
         elif choice == "2":
             next = "list_tournaments"
-        else: 
+        else:
             next = "homepage"
         return next, None

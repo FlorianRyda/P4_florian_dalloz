@@ -3,10 +3,9 @@ from chess_tournament.views.player_view import PlayerView
 
 
 class PlayerController:
-
     @classmethod
     def list_players(cls, store, route_params=None):
-        
+
         choice, player_id = PlayerView.display_list(store.get_all_players())
 
         if choice == "1":
@@ -32,16 +31,14 @@ class PlayerController:
         player = Player(**data)
         if player.is_valid():
             store.add_player(player)
-        else :
+        else:
             print("Informations du joueur non valide.")
 
         return "list_player", None
 
     @classmethod
     def delete(cls, store, route_params):
-        store["players"] = [
-            p for p in store["players"] if p.id != route_params
-        ]
+        store["players"] = [p for p in store["players"] if p.id != route_params]
         return "list_player", None
 
     @classmethod
@@ -52,7 +49,7 @@ class PlayerController:
         """
         player = store.get_player(route_params)
 
-        # we pass the player to the view that will display the player info and
+        # we pass the player instance to the view that will display the player info and
         # the next options
         choice = PlayerView.detail_player(player)
         if choice.lower() == "q":
@@ -70,4 +67,3 @@ class PlayerController:
         player.update(**data)
         store.save_player(player)
         return "list_player", None
-

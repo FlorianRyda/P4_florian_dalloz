@@ -48,15 +48,9 @@ class PlayerView:
 
     @classmethod
     def update_player(cls, player):
+        print(f"Modification du joueur {player}")
+        print("")
         return {
-            "id": input(f"Indiquez l'identifiant [{player.id}]: ") or player.id,
-            "lastname": input(f"Indiquez le nom de famille [{player.firstname}]: ")
-            or player.id,
-            "firstname": input(f"Indiquez le prénom [{player.lastname}]: ")
-            or player.id,
-            "birth": input(f"Indiquez la date de naissance [{player.birth}]: ")
-            or player.id,
-            "gender": input(f"Indiquez le sexe [{player.gender}]: ") or player.id,
-            "ranking": input(f"Indiquez le classement [{player.ranking}]: ")
+            "ranking": input(f"Indiquez le nouveau classement [{player.ranking}]: ")
             or player.id,
         }

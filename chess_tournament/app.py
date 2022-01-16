@@ -3,7 +3,7 @@ from chess_tournament.models.players import Player
 from chess_tournament.controllers.player_controller import PlayerController
 from chess_tournament.controllers.tournament_controller import TournamentController
 from chess_tournament.models.tournaments import Tournament, Round, Match
-from chess_tournament.views.tournaments_view import TournamentView
+
 
 import subprocess as sp
 import json
@@ -12,42 +12,48 @@ from tinydb import TinyDB, Query
 
 import ipdb
 
-
 class Store:
     def __init__(self):
-        self.data = {"players": [], "tournaments": []}
-        self.db = TinyDB("database.json")
-        self.player_table = self.db.table("players")
-        self.tournaments_table = self.db.table("tournaments")
-
+        self.data = {'players': [], 'tournaments': []}
+        self.db = TinyDB('database.json')
+        self.player_table = self.db.table('players')
+        self.tournaments_table = self.db.table('tournaments')
+      
         players_dict = self.player_table.all()
         for player_dict in players_dict:
-            self.data["players"].append(Player.from_dict(player_dict))
+            self.data['players'].append(Player.from_dict(player_dict))
+   
 
         tournaments_dict = self.tournaments_table.all()
         for tournament_dict in tournaments_dict:
-            tournament = Tournament.from_dict(tournament_dict)
-            self.data["tournaments"].append(tournament)
+            tournament = Tournament.from_dict(self, tournament_dict)
+            self.data['tournaments'].append(tournament)
+
             rounds_dict = tournament_dict["rounds"]
             for round_dict in rounds_dict:
-                round = Round.from_dict(round_dict)
+                round = Round.from_dict(self, round_dict)
                 tournament.rounds.append(round)
-                matches_dict = round_dict["matches"]
-
+                matches_dict = round_dict['matches']
+               
                 for match_dict in matches_dict:
                     match_dict["player1"] = self.get_player(match_dict["player1"])
                     match_dict["player2"] = self.get_player(match_dict["player2"])
-                    round.matches.append(Match.from_dict(match_dict))
+                    round.matches.append(Match.from_dict(self, match_dict))
+
+
 
     def save_player(self, player):
         player_query = Query()
         self.player_table.upsert(player.to_dict(), player_query.id == player.id)
-
+    
     def save_tournament(self, tournament):
         tournament_query = Query()
-        self.tournaments_table.upsert(
-            tournament.to_dict(), tournament_query.name == tournament.name
-        )
+        self.tournaments_table.upsert(tournament.to_dict(), tournament_query.name == tournament.name)
+        
+    def extract_player_from_dict(self, players_ids):
+        pass
+
+        
 
     def get_player(self, player_id):
         return next(p for p in self.data["players"] if str(p.id) == str(player_id))
@@ -71,6 +77,10 @@ class Store:
         self.save_tournament(tournament)
 
 
+
+
+
+
 class Application:
 
     routes = {
@@ -88,7 +98,9 @@ class Application:
         "add_tournament_player": TournamentController.add_tournament_player,
         "create_next_round": TournamentController.create_next_round,
         "play_match": TournamentController.play_match,
-        "update_players_ranking": TournamentController.update_players_ranking,
+        "select_tournament_player": TournamentController.select_tournament_player,
+        "sort_players_ranking": TournamentController.sort_players_ranking,
+        "sort_players_alphabetical": TournamentController.sort_players_alphabetical
     }
 
     def __init__(self) -> None:
@@ -100,7 +112,7 @@ class Application:
     def run(self):
         while not self.exit:
             # Clear the shell output
-            sp.call("clear", shell=True)
+            sp.call('clear', shell=True)
 
             # Get the controller method that should handle our current route
             controller_method = self.routes[self.route]
@@ -110,8 +122,11 @@ class Application:
             # Every controller should return two things:
             # - the next route to display
             # - the parameters needed for the next route
-
-            next_route, next_params = controller_method(self.store, self.route_params)
+           
+            next_route, next_params = controller_method(
+                self.store, self.route_params
+                
+            )
 
             # set the next route and input
             self.route = next_route
@@ -120,3 +135,4 @@ class Application:
             # if the controller returned "quit" then we end the loop
             if next_route == "quit":
                 self.exit = True
+

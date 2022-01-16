@@ -15,12 +15,7 @@ class Player:
             f"Joueur #{self.id} {self.firstname} {self.lastname.upper()} {self.ranking}"
         )
 
-    def update(self, id, lastname, firstname, birth, gender, ranking):
-        self.id = id
-        self.lastname = lastname
-        self.firstname = firstname
-        self.birth = birth
-        self.gender = gender
+    def update(self, ranking):
         self.ranking = ranking
 
     def is_valid(self):

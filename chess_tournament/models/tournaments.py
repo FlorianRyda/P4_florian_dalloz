@@ -1,6 +1,7 @@
 from datetime import datetime
 from operator import attrgetter
 import ipdb
+from chess_tournament.models.players import Player, PlayerManager
 
 
 class Tournament:
@@ -101,14 +102,15 @@ class Tournament:
         if self.rounds:
             return self.rounds[-1]
 
+        
+
     @classmethod
-    def from_dict(cls, tournament_dict):
-        return cls(
-            tournament_dict["name"],
-            tournament_dict["place"],
-            tournament_dict["time"],
-            tournament_dict["description"],
-        )
+    def from_dict(cls, store, tournament_dict):
+        tournament = cls(name=tournament_dict["name"], place=tournament_dict["place"], time=tournament_dict["time"], description=tournament_dict["description"])
+        for player_id in tournament_dict["players"]:
+            tournament.players.append(store.get_player(player_id))
+       
+        return tournament
 
 
 class TournamentManager:
@@ -126,10 +128,10 @@ class TournamentManager:
 
 class Round:
     def __init__(
-        self, round_name, datetime_start=None, datetime_end=None, matches=None
+        self, round_name, datetime_end=None, matches=None
     ):
         self.round_name = round_name
-        self.datetime_start = datetime_start if datetime_start else datetime.now()
+        self.datetime_start = datetime.now()
         self.datetime_end = datetime_end
         self.matches = matches if matches else []
 
@@ -154,6 +156,7 @@ class Round:
             "datetime_start": datetime.timestamp(self.datetime_start)
             if self.datetime_start
             else None,
+            #datetime.timestamp(self.start) if self.start else None
             "datetime_end": datetime.timestamp(self.datetime_end)
             if self.datetime_end
             else None,
@@ -161,7 +164,7 @@ class Round:
         }
 
     @classmethod
-    def from_dict(cls, tournament_dict):
+    def from_dict(cls, store, tournament_dict):
         return cls(
             tournament_dict["round_name"],
             tournament_dict["datetime_start"],
@@ -210,5 +213,5 @@ class Match:
         }
 
     @classmethod
-    def from_dict(cls, round_dict):
+    def from_dict(cls, store, round_dict):
         return cls(**round_dict)

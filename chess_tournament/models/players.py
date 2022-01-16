@@ -1,6 +1,3 @@
-import ipdb
-
-
 class Player:
     def __init__(self, id, lastname, firstname, birth, gender, ranking):
         self.id = id
@@ -34,7 +31,6 @@ class Player:
     @classmethod
     def from_dict(cls, player_dict):
         return cls(**player_dict)
-
 
 class PlayerManager:
     def __init__(self, store):

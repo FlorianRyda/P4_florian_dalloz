@@ -1,16 +1,8 @@
 from chess_tournament.models.tournaments import (
     Tournament,
-    TournamentManager,
-    Round,
-    Match,
 )
 from chess_tournament.views.tournaments_view import TournamentView
-from chess_tournament.controllers.player_controller import PlayerController
-from chess_tournament.views.player_view import PlayerView
-import datetime
 from chess_tournament.models.players import Player
-import ipdb
-
 
 class TournamentController:
     @classmethod
@@ -65,7 +57,7 @@ class TournamentController:
 
         choice, param = TournamentView.detail_tournament(tournament, store)
         choice = choice.lower()
-        
+
         if choice == "q":
             return "quit", None
         elif choice == "h":
@@ -124,11 +116,18 @@ class TournamentController:
 
     @classmethod
     def sort_players_ranking(self, store, tournament):
+        """
+        Sort tournament players by their ranking (descending order)
+        """
         tournament.players.sort(key=lambda x: int(x.ranking), reverse=True)
         return "view_tournament", tournament.name
 
     @classmethod
     def sort_players_alphabetical(self, store, tournament):
+        """
+        Sort tournament players by their last name in
+        alphabetical order (descending order)
+        """
         tournament.players.sort(key=lambda x: x.lastname.lower())
         return "view_tournament", tournament.name
 
@@ -152,4 +151,3 @@ class TournamentController:
         player = Player(**player_data)
         tournament = tournament.players.append(player)
         return "view_tournament", tournament.name
-

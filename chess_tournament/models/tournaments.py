@@ -1,8 +1,5 @@
 from datetime import datetime
 from operator import attrgetter
-import ipdb
-from chess_tournament.models.players import Player, PlayerManager
-
 
 class Tournament:
     def __init__(self, name, place, time, description):
@@ -17,16 +14,16 @@ class Tournament:
         self.scores = {}
 
     def set_player_score(self, player_id, points):
+        """assigns score to a player id stored on tournament instance"""
         self.scores[player_id] = self.scores.get(player_id, 0) + points
 
     def update_ranking(self, player_id, ranking):
+        """updates ranking of player in tournament"""
         self.players[player_id] = self.players.get(player_id, 0) + ranking
 
-    def is_valid(self):
-        return True
-
     def generate_1st_round(self):
-
+        """creates round 1
+        contains pairing algorithm"""
         match_list = []
         ordered_players = sorted(self.players, key=attrgetter("ranking"))
         first_list = ordered_players[0:4]
@@ -38,23 +35,26 @@ class Tournament:
             match_list.append(match)
         first_round = Round("Round1")
         first_round.matches = match_list
-
         self.rounds.append(first_round)
 
     def generate_next_round(self):
+        """
+        creates rounds 2-4
+        contains pairing algorithm
+        """
         current_round = Round("Round" + (str(len(self.rounds) + 1)))
         self.rounds.append(current_round)
-        # sort by score and ranking
+
         available_players = self.players.copy()
         for player in available_players:
             player.score = self.scores.get(player.id, 0)
         available_players.sort(key=lambda x: (x.score, x.ranking), reverse=True)
 
         while available_players:
-            # extract first player
             current_player = available_players.pop(0)
 
             for i, available_player in enumerate(available_players):
+
                 if not self.has_played(current_player, available_player):
                     match = Match(current_player, available_player)
                     current_round.matches.append(match)
@@ -62,16 +62,17 @@ class Tournament:
                     break
 
     def has_played(self, player1, player2):
+        """
+        Lets program know if pairing has already played
+        """
         for round in self.rounds:
             if round.has_played(player1, player2):
                 return True
         return False
 
     def is_finished(self):
+        """Checks if all rounds are completed"""
         return all(round.is_finished() for round in self.rounds)
-
-    # def set_start_time(self):
-    # 	self.start = datetime.date.now()
 
     def set_end_time(self):
         self.end = datetime.now()
@@ -85,6 +86,9 @@ class Tournament:
         self.description = description
 
     def to_dict(self):
+        """
+        Updates or add all tournament data in json file
+        """
         return {
             "name": self.name,
             "place": self.place,
@@ -102,14 +106,21 @@ class Tournament:
         if self.rounds:
             return self.rounds[-1]
 
-        
-
     @classmethod
     def from_dict(cls, store, tournament_dict):
-        tournament = cls(name=tournament_dict["name"], place=tournament_dict["place"], time=tournament_dict["time"], description=tournament_dict["description"])
+        """
+        Extracts selected tournament data from json file
+        turns data into an instance
+        """
+        tournament = cls(
+            name=tournament_dict["name"],
+            place=tournament_dict["place"],
+            time=tournament_dict["time"],
+            description=tournament_dict["description"],
+        )
         for player_id in tournament_dict["players"]:
             tournament.players.append(store.get_player(player_id))
-       
+
         return tournament
 
 
@@ -127,9 +138,7 @@ class TournamentManager:
 
 
 class Round:
-    def __init__(
-        self, round_name, datetime_end=None, matches=None
-    ):
+    def __init__(self, round_name, datetime_end=None, matches=None):
         self.round_name = round_name
         self.datetime_start = datetime.now()
         self.datetime_end = datetime_end
@@ -142,6 +151,9 @@ class Round:
         self.datetime_end = datetime.now()
 
     def has_played(self, player1, player2):
+        """
+        Lets program know if pairing has already played
+        """
         for match in self.matches:
             if match.has_played(player1, player2):
                 return True
@@ -151,12 +163,14 @@ class Round:
         return all(match.is_finished() for match in self.matches)
 
     def to_dict(self):
+        """
+        Updates or add all round data in json file
+        """
         return {
             "round_name": self.round_name,
             "datetime_start": datetime.timestamp(self.datetime_start)
             if self.datetime_start
             else None,
-            #datetime.timestamp(self.start) if self.start else None
             "datetime_end": datetime.timestamp(self.datetime_end)
             if self.datetime_end
             else None,
@@ -165,6 +179,8 @@ class Round:
 
     @classmethod
     def from_dict(cls, store, tournament_dict):
+        """Extracts selected round data from json file
+        turns data into an instance"""
         return cls(
             tournament_dict["round_name"],
             tournament_dict["datetime_start"],
@@ -198,6 +214,9 @@ class Match:
         return self.points1 is not None and self.points2 is not None
 
     def has_played(self, player1, player2):
+        """
+        Lets program know if pairing has already played
+        """
         return (
             self.is_finished()
             and player1 in (self.player1, self.player2)
@@ -205,6 +224,9 @@ class Match:
         )
 
     def to_dict(self):
+        """
+        Updates or add all match data in json file
+        """
         return {
             "player1": self.player1.id,
             "player2": self.player2.id,
@@ -214,4 +236,6 @@ class Match:
 
     @classmethod
     def from_dict(cls, store, round_dict):
+        """Extracts selected match data from json file
+        turns data into an instance"""
         return cls(**round_dict)

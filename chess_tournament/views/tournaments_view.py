@@ -1,11 +1,7 @@
-# -*- coding: utf-8 -*-
-import ipdb
-
-
 class TournamentView:
     @classmethod
     def display_list_tournaments(cls, tournaments):
-        print("Liste des tournois passés et en cours: ")
+        print("Liste des tournois passes et en cours: ")
         print("")
         for tournament in tournaments:
             print(
@@ -23,13 +19,16 @@ class TournamentView:
 
         if choice in ("1", "3"):
             extra_info = input("Entrez le nom du tournoi:")
-
+            
         return choice, extra_info
 
     @classmethod
     def detail_tournament(cls, tournament, store):
+        """Main view of the selected tournament
+        Displays all the tournament data available
+        """
 
-        print("Détails du tournoi:")
+        print("Details du tournoi:")
         print("")
         print(f"nom: {tournament.name}")
         print(f"Lieu: {tournament.place}")
@@ -95,7 +94,7 @@ class TournamentView:
             print("")
 
         elif tournament.current_round.is_finished() and len(tournament.rounds) < 4:
-            print("S. Créer le round suivant.")
+            print("S. Creer le round suivant.")
 
         print("4. Trier les joueurs par classement")
         print("5. Trier les joueurs par ordre alphabétique")
@@ -103,7 +102,7 @@ class TournamentView:
         print("Q. Quitter le programme")
 
         print("")
-        return input("Tapez Votre Choix:"), tournament.name
+        return input("Tapez Votre Choix:"), None
 
     @classmethod
     def play_match(cls, match):

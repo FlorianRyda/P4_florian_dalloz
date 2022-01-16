@@ -1,7 +1,6 @@
 from chess_tournament.models.players import Player, PlayerManager
 from chess_tournament.views.player_view import PlayerView
 
-
 class PlayerController:
     @classmethod
     def list_players(cls, store, route_params=None):
@@ -25,9 +24,7 @@ class PlayerController:
 
     @classmethod
     def create(cls, store, route_params=None):
-        """
-        
-        """
+        """ """
         data = PlayerView.create_new_player()
 
         player = Player(**data)
@@ -50,9 +47,6 @@ class PlayerController:
         we want to display
         """
         player = store.get_player(route_params)
-        
-        # we pass the player instance to the view that will display the player info and
-        # the next options
         choice = PlayerView.detail_player(player)
         if choice.lower() == "q":
             return "quit", None
@@ -75,6 +69,3 @@ class PlayerController:
         player.update(**data)
         store.save_player(player)
         return "list_player", None
-
-    
-        

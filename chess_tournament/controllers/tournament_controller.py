@@ -61,11 +61,11 @@ class TournamentController:
 
     @classmethod
     def view_tournament(cls, store, route_params):
-
         tournament = store.get_tournament(route_params)
 
         choice, param = TournamentView.detail_tournament(tournament, store)
         choice = choice.lower()
+        
         if choice == "q":
             return "quit", None
         elif choice == "h":
@@ -78,9 +78,8 @@ class TournamentController:
             return "create_next_round", tournament
         elif len(tournament.rounds) == 4 and tournament.is_finished():
             return "view_tournament", tournament.name
-        # when tournament ends, update players in tournament
         elif len(tournament.rounds) == 4 and tournament.is_finished() and choice == "u":
-            return "update_players_ranking", tournament
+            return "select_tournament_player", tournament
         elif len(store.data["players"]) < 8 and choice == "a":
             return "add_tournament_player", tournament
         elif choice == "play_match":
@@ -115,22 +114,22 @@ class TournamentController:
         return "view_tournament", tournament.name
 
     @classmethod
-    def update_players_ranking(cls, store, tournament):
+    def select_tournament_player(cls, store, tournament):
         players_list = tournament.players
-        player_id = TournamentView.update_players_ranking(players_list)
+        player_id = TournamentView.select_tournament_player(players_list)
         player_instance = store.get_player(player_id)
         player_ranking = TournamentView.update_player_ranking(player_instance)
         tournament.update_ranking(player_id, player_ranking)
         return "view_tournament", tournament.name
 
     @classmethod
-    def sort_players_ranking(self, tournament):
-        tournament.players.sort(key=lambda x: x.ranking, reverse=True)
+    def sort_players_ranking(self, store, tournament):
+        tournament.players.sort(key=lambda x: int(x.ranking), reverse=True)
         return "view_tournament", tournament.name
 
     @classmethod
-    def sort_players_alphabetical(self, tournament):
-        tournament.players.sort(key=lambda x: x.lastname, reverse=True)
+    def sort_players_alphabetical(self, store, tournament):
+        tournament.players.sort(key=lambda x: x.lastname.lower())
         return "view_tournament", tournament.name
 
     @classmethod
@@ -153,3 +152,4 @@ class TournamentController:
         player = Player(**player_data)
         tournament = tournament.players.append(player)
         return "view_tournament", tournament.name
+

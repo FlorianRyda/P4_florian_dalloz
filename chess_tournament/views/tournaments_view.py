@@ -40,7 +40,6 @@ class TournamentView:
         print("")
 
         print("liste des joueurs du tournoi:")
-        # for player in store.data["players"]:
         for player in tournament.players:
             print(player)
         print("")
@@ -104,10 +103,15 @@ class TournamentView:
         print("Q. Quitter le programme")
 
         print("")
-        return input("Votre Choix:"), None
+        return input("Tapez Votre Choix:"), tournament.name
 
     @classmethod
     def play_match(cls, match):
+        """
+        Show the two players playing in the current match
+        Show options available to set the winner(s)
+        Return the input
+        """
         print(f"Entrez le résultat du match {match.player1} vs {match.player2}:")
         print(f"1.{match.player1} gagne.")
         print(f"2.{match.player2} gagne.")
@@ -115,7 +119,7 @@ class TournamentView:
         return input("Votre choix: ")
 
     @classmethod
-    def update_players_ranking(cls, tournament_players):
+    def select_tournament_player(cls, tournament_players):
         print("Le tournoi est terminé")
         print("Veuillez mettre à jour le classement de chaque joueur")
         print("")
@@ -125,7 +129,7 @@ class TournamentView:
         print("Choisissez le joueur grâce à son identifiant:")
         for player in tournament_players:
             print({f"{player.id}/ {player}// Classement actuel: {player.ranking}"})
-        return input("Votre choix: ")
+        return "update_player_ranking", input("Votre choix: ")
 
     @classmethod
     def update_player_ranking(cls, player):

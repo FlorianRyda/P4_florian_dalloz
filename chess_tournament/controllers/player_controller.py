@@ -25,7 +25,9 @@ class PlayerController:
 
     @classmethod
     def create(cls, store, route_params=None):
-        # call the view that will return us a dict with the new player info
+        """
+        
+        """
         data = PlayerView.create_new_player()
 
         player = Player(**data)
@@ -48,7 +50,7 @@ class PlayerController:
         we want to display
         """
         player = store.get_player(route_params)
-
+        
         # we pass the player instance to the view that will display the player info and
         # the next options
         choice = PlayerView.detail_player(player)
@@ -59,6 +61,12 @@ class PlayerController:
 
     @classmethod
     def update(cls, store, player_id):
+        """
+        Get the store instance on which the players are stored,
+        Selects the player according to its id,
+        Calls the view to collect the new ranking,
+        Updates the selected players with the new ranking,
+        """
         manager = PlayerManager(store)
         player = manager.get_player(player_id)
 
@@ -67,3 +75,6 @@ class PlayerController:
         player.update(**data)
         store.save_player(player)
         return "list_player", None
+
+    
+        

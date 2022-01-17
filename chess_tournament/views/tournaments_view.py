@@ -119,16 +119,14 @@ class TournamentView:
 
     @classmethod
     def select_tournament_player(cls, tournament_players):
-        print("Le tournoi est terminé")
+        print("Le tournoi est termine")
         print("Veuillez mettre à jour le classement de chaque joueur")
         print("")
         for player in tournament_players:
             print(player)
         print("")
-        print("Choisissez le joueur grâce à son identifiant:")
-        for player in tournament_players:
-            print({f"{player.id}/ {player}// Classement actuel: {player.ranking}"})
-        return "update_player_ranking", input("Votre choix: ")
+        print("Choisissez le joueur grace a son identifiant")
+        return input("Votre choix: ")
 
     @classmethod
     def update_player_ranking(cls, player):
@@ -140,7 +138,7 @@ class TournamentView:
         return {
             "name": input("Entrez un nom: "),
             "place": input("Entrez un lieu: "),
-            "time": input("Entrez le contrôle du temps: "),
+            "time": input("Entrez le controle du temps: "),
             "description": input("Entrez une description: "),
         }
 
@@ -149,7 +147,7 @@ class TournamentView:
         return {
             "name": input(f"Entrez un nom: [{tournament.name}]"),
             "place": input(f"Entrez un lieu: [{tournament.place}]"),
-            "time": input(f"Entrez le contrôle du temps: [{tournament.time}]"),
+            "time": input(f"Entrez le controle du temps: [{tournament.time}]"),
             "description": input(f"Entrez une description: [{tournament.description}]"),
         }
 
@@ -161,14 +159,14 @@ class TournamentView:
         while len(ids) < 8:
             id = input("Sélectionner un id de joueur: ")
             if not id.isnumeric():
-                print("Valeur invalide, l'id doit être un chiffre.")
+                print("Valeur invalide, l'id doit etre un chiffre.")
                 continue
             id = int(id)
 
             if id not in [int(p.id) for p in players]:
-                print("Joueur non trouvé, veuillez réessayer.")
+                print("Joueur non trouve, veuillez reessayer.")
             elif id in ids:
-                print("Joueur déjà sélectionné, ajoutez un autre joueur.")
+                print("Joueur deja selectionne, ajoutez un autre joueur.")
             else:
                 ids.append(id)
 
@@ -176,8 +174,8 @@ class TournamentView:
 
     @classmethod
     def view_selected_match(cls, match_num, match):
-        print(f"Résultat du Match n°{match_num}.")
+        print(f"Resultat du Match n°{match_num}.")
         print(f"Entrez 1 si joueur {match.player1} gagne")
         print(f"Entrez 2 si joueur {match.player2} gagne")
-        print("Entrez 3 si égalité")
-        return input("Indiquez le résultat ici: ")
+        print("Entrez 3 si egalite")
+        return input("Indiquez le resultat ici: ")

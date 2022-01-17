@@ -3,6 +3,7 @@ from chess_tournament.models.tournaments import (
 )
 from chess_tournament.views.tournaments_view import TournamentView
 from chess_tournament.models.players import Player
+import ipdb
 
 class TournamentController:
     @classmethod
@@ -68,8 +69,6 @@ class TournamentController:
             return "create_first_round", tournament
         elif tournament.rounds and len(tournament.rounds) < 4 and choice == "s":
             return "create_next_round", tournament
-        elif len(tournament.rounds) == 4 and tournament.is_finished():
-            return "view_tournament", tournament.name
         elif len(tournament.rounds) == 4 and tournament.is_finished() and choice == "u":
             return "select_tournament_player", tournament
         elif len(store.data["players"]) < 8 and choice == "a":
@@ -108,10 +107,11 @@ class TournamentController:
     @classmethod
     def select_tournament_player(cls, store, tournament):
         players_list = tournament.players
-        player_id = TournamentView.select_tournament_player(players_list)
+        player_id = int(TournamentView.select_tournament_player(players_list))
         player_instance = store.get_player(player_id)
         player_ranking = TournamentView.update_player_ranking(player_instance)
-        tournament.update_ranking(player_id, player_ranking)
+        ipdb.set_trace()
+        player_instance.update(player_ranking)
         return "view_tournament", tournament.name
 
     @classmethod

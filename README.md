@@ -65,6 +65,7 @@ Dans le cas présent, ce sera :(env)
 Etape 4 - Importer les paquets
 
 Cette étape permet d’installer tous les modules nécessaires à l’exécution du programme.
+Notez qu'une fois que vous aurez effectuer cette opération une première fois, vous n'aurez pas besoin de l'effectuer à nouveau.
 
 Tapez et valider dans le terminal :
 
@@ -75,6 +76,27 @@ Tapez et valider dans le terminal :
     pip freeze  
 
 Une liste de modules apparaît et elle devrait au moins contenir tous les modules se trouvant dans le fichier “requirements.txt”.
+
+Etape 5 (Optionnelle)
+
+Cette étape n'est pas nécessaire pour l'exécution du programme. Elle vous sert uniquement à générer un rapport flake-8.
+
+Une fois dans le dossier du programme et l'environnement virtuel activé, tapez la commande dans le terminal: 
+
+   pip install flake8-html  
+    
+Cela va installer le paquet nécessaire à la création du rapport. Ensuite, tapez : 
+
+    flake8 --format=html --htmldir=flake-report
+
+un dossier va apparaitre dans le repository, vous pouvez alors le consulter
+
+Then run flake8 passing the --format=html option and a --htmldir:
+
+$ flake8 --format=html --htmldir=flake-report
+
+
+
 
  
 

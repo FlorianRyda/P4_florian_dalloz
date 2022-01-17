@@ -133,25 +133,41 @@ Cette partie vous permet :
 2) La gestion des tournois
 
 Cette partie vous permet :
- De consulter tout tournoi passé ou en cours,
-     Vous arrivez alors sur la page de détails du tournoi.
-     Si le tournoi n'est pas encore terminé:
-     Vous allez ensuite créer chaque round un par un. Le premier sera créé via la touche "C" et chaque suivant avec la touche "S" 
-     Une fois le round créé, vous pourrez sélectionner et entrer le résultat de chaque match. Vous pourrez sélectionner les matchs dans l'ordre que vous souhaitez.
-     Une fois tous les rounds terminés, vous pourrez modifier le classement des joueurs. 
-     Vous pouvez à tout moment trier les joueurs par ordre alphabétique ou par classement.
- De créer un nouveau tournoi,
-    Lors de la création d'un tournoi:
-     Vous allez entrer les information du tournoi
-     Vous allez sélectionner les 8 joueurs que vous devez ajouter au tournoi. Vous ne pourrez pas quitter le programme à ce stade via une commande. Si vous avez moins de 8 joueurs enregistrés, vous serez redirigé sur la page de création de joueurs.
-     Vous arrivez alors sur la page de détails du tournoi.
-     Vous allez ensuite créer chaque round un par un. Le premier sera créé via la touche "C" et chaque suivant avec la touche "S" 
-     Une fois le round créé, vous pourrez sélectionner et entrer le résultat de chaque match. Vous pourrez sélectionner les matchs dans l'ordre que vous souhaitez.
-     Une fois tous les rounds terminés, vous pourrez modifier le classement des joueurs. 
-     Vous pouvez à tout moment trier les joueurs par ordre alphabétique ou par classement.
-     Un message sera affiché ("Tournoi Terminé !") sur la page de détails du tournoi lorsque celui-ci est terminé.
- Modifier les informations d'un tournoi,
- Revenir à la page d'accueil.
+
+A) De consulter tout tournoi passé ou en cours,
+
+Vous arrivez alors sur la page de détails du tournoi.
+
+Si le tournoi n'est pas encore terminé:
+
+Vous allez ensuite créer chaque round un par un. Le premier sera créé via la touche "C" et chaque suivant avec la touche "S". 
+Une fois le round créé, vous pourrez sélectionner et entrer le résultat de chaque match. Vous pourrez sélectionner les matchs dans l'ordre que vous souhaitez.
+
+Une fois tous les rounds terminés, vous pourrez modifier le classement des joueurs. 
+Vous pouvez à tout moment trier les joueurs par ordre alphabétique ou par classement.
+ 
+B) De créer un nouveau tournoi,
+
+Lors de la création d'un tournoi:
+
+Vous allez entrer les information du tournoi
+Vous allez sélectionner les 8 joueurs que vous devez ajouter au tournoi. Vous ne pourrez pas quitter le programme à ce stade via une commande. 
+Si vous avez moins de 8 joueurs enregistrés, vous serez redirigé sur la page de création de joueurs.
+
+Vous arrivez alors sur la page de détails du tournoi.
+
+Vous allez ensuite créer chaque round un par un. Le premier sera créé via la touche "C" et chaque suivant avec la touche "S" 
+
+Une fois le round créé, vous pourrez sélectionner et entrer le résultat de chaque match. Vous pourrez sélectionner les matchs dans l'ordre que vous souhaitez.
+
+Une fois tous les rounds terminés, vous pourrez modifier le classement des joueurs. 
+
+Vous pouvez à tout moment trier les joueurs par ordre alphabétique ou par classement.
+
+Un message sera affiché ("Tournoi Terminé !") sur la page de détails du tournoi lorsque celui-ci est terminé.
+
+C) Modifier les informations d'un tournoi,
+D) Revenir à la page d'accueil.
 
 Bonne utilisation !
 

@@ -52,19 +52,19 @@ class TournamentView:
                 for match in round.matches:
                     if not match.points1 and not match.points2:
                         print(
-                            f"{match.player1} vs {match.player2} en attente de résultats"
+                            f"{match.player1} vs {match.player2} en attente de resultats"
                         )
                     else:
                         print(f"{match.player1} vs {match.player2}")
                         print(f"{match.points1} vs {match.points2}")
         if not tournament.rounds:
-            print("Aucun round créé")
-            print("C. Créer le premier round.")
+            print("Aucun round cree")
+            print("C. Creer le premier round.")
         elif len(store.data["players"]) < 8:
             print("A. Ajouter joueur(s) au tournoi")
         elif tournament.is_finished() and len(tournament.rounds) == 4:
             tournament.set_end_time()
-            print("Tournoi terminé !")
+            print("Tournoi termine !")
             print("U. Mettez à jour le classements des joueurs")
 
         elif not tournament.current_round.is_finished():
@@ -74,9 +74,9 @@ class TournamentView:
                 print("Etat du round en cours: ")
                 for i, match in enumerate(current_round.matches):
                     if match.points1 or match.points2:
-                        print(f"Match {str(i+1)} terminé.")
+                        print(f"Match {str(i+1)} termine.")
                     else:
-                        print(f"Match {str(i+1)} en attente de résultats.")
+                        print(f"Match {str(i+1)} en attente de resultats.")
                 print("")
 
                 if not current_round.matches[0].is_finished():
@@ -109,7 +109,7 @@ class TournamentView:
         Show options available to set the winner(s)
         Return the input
         """
-        print(f"Entrez le résultat du match {match.player1} vs {match.player2}:")
+        print(f"Entrez le resultat du match {match.player1} vs {match.player2}:")
         print(f"1.{match.player1} gagne.")
         print(f"2.{match.player2} gagne.")
         print("3. Egalite.")
@@ -155,7 +155,7 @@ class TournamentView:
             print(player)
         ids = []
         while len(ids) < 8:
-            id = input("Sélectionner un id de joueur: ")
+            id = input("Selectionnez un id de joueur: ")
             if not id.isnumeric():
                 print("Valeur invalide, l'id doit etre un chiffre.")
                 continue

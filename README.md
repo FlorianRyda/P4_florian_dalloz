@@ -24,7 +24,7 @@ Etape 2 - Créer l’environnement virtuel
 
 Utilisez la commande python --version dans votre terminal pour vérifier que la version de Python est 3.3 ou ultérieure.
 Si ce n’est pas le cas, il faudra réinstaller Python depuis https://www.python.org/downloads/.
-A présent il faut activer l’environnement virtuel avec le commande suivante dans le terminal :
+A présent il faut créer l’environnement virtuel avec le commande suivante dans le terminal :
 
     python -m venv env
 

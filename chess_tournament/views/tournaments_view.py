@@ -85,19 +85,17 @@ class TournamentView:
                     print(f"2. Jouer le match {current_round.matches[1]}")
                 if not current_round.matches[2].is_finished():
                     print(f"3. Jouer le match {current_round.matches[2]}")
-                if not current_round.matches[3].is_finished():
+                if not current_round.matches[3].is_finished() and current_round.matches[3]:
                     print(f"4. Jouer le match {current_round.matches[3]}")
                 choice = input("Votre choix: ")
 
                 return "play_match", int(choice) - 1
 
-            print("")
-
         elif tournament.current_round.is_finished() and len(tournament.rounds) < 4:
             print("S. Creer le round suivant.")
 
         print("4. Trier les joueurs par classement")
-        print("5. Trier les joueurs par ordre alphabétique")
+        print("5. Trier les joueurs par ordre alphabetique")
         print("H. Page d'accueil")
         print("Q. Quitter le programme")
 
@@ -114,13 +112,13 @@ class TournamentView:
         print(f"Entrez le résultat du match {match.player1} vs {match.player2}:")
         print(f"1.{match.player1} gagne.")
         print(f"2.{match.player2} gagne.")
-        print("3. Egalité.")
+        print("3. Egalite.")
         return input("Votre choix: ")
 
     @classmethod
     def select_tournament_player(cls, tournament_players):
         print("Le tournoi est termine")
-        print("Veuillez mettre à jour le classement de chaque joueur")
+        print("Veuillez mettre a jour le classement de chaque joueur")
         print("")
         for player in tournament_players:
             print(player)

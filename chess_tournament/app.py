@@ -43,9 +43,6 @@ class Store:
             tournament.to_dict(), tournament_query.name == tournament.name
         )
 
-    def extract_player_from_dict(self, players_ids):
-        pass
-
     def get_player(self, player_id):
         return next(p for p in self.data["players"] if str(p.id) == str(player_id))
 

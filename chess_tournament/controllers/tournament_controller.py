@@ -110,7 +110,6 @@ class TournamentController:
         player_id = int(TournamentView.select_tournament_player(players_list))
         player_instance = store.get_player(player_id)
         player_ranking = TournamentView.update_player_ranking(player_instance)
-        ipdb.set_trace()
         player_instance.update(player_ranking)
         return "view_tournament", tournament.name
 

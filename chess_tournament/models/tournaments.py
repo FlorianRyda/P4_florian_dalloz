@@ -2,11 +2,11 @@ from datetime import datetime
 from operator import attrgetter
 
 class Tournament:
-    def __init__(self, name, place, time, description):
+    def __init__(self, name, place, start, end, time, description):
         self.name = name
         self.place = place
-        self.start = datetime.now()
-        self.end = None
+        self.start = datetime.now().strftime('%d/%m/%y %I:%M %S %p') if not start else start
+        self.end = None if not end else end
         self.rounds = []
         self.players = []
         self.time = time
@@ -72,10 +72,11 @@ class Tournament:
 
     def is_finished(self):
         """Checks if all rounds are completed"""
+        self.set_end_time()
         return all(round.is_finished() for round in self.rounds)
 
     def set_end_time(self):
-        self.end = datetime.now()
+        self.end = datetime.now().strftime('%d/%m/%y %I:%M %S %p')
 
     def update(self, name, place, start, end, time, description):
         self.name = name
@@ -92,8 +93,8 @@ class Tournament:
         return {
             "name": self.name,
             "place": self.place,
-            "start": datetime.timestamp(self.start) if self.start else None,
-            "end": datetime.timestamp(self.end) if self.end else None,
+            "start": self.start,
+            "end": self.end,
             "rounds": [r.to_dict() for r in self.rounds],
             "players": [player.id for player in self.players],
             "time": self.time,
@@ -115,6 +116,8 @@ class Tournament:
         tournament = cls(
             name=tournament_dict["name"],
             place=tournament_dict["place"],
+            start=tournament_dict["start"],
+            end=tournament_dict['end'],
             time=tournament_dict["time"],
             description=tournament_dict["description"],
         )
@@ -138,17 +141,17 @@ class TournamentManager:
 
 
 class Round:
-    def __init__(self, round_name, datetime_end=None, matches=None):
+    def __init__(self, round_name, datetime_end=None, datetime_start=None):
         self.round_name = round_name
-        self.datetime_start = datetime.now()
+        self.datetime_start = datetime.now().strftime('%d/%m/%y %I:%M %S %p') if not datetime_start else datetime_start
         self.datetime_end = datetime_end
-        self.matches = matches if matches else []
+        self.matches = []
 
     def __repr__(self):
         return f"{self.round_name}: {self.matches}"
 
     def end(self):
-        self.datetime_end = datetime.now()
+        self.datetime_end = datetime.now().strftime('%d/%m/%y %I:%M %S %p')
 
     def has_played(self, player1, player2):
         """
@@ -160,6 +163,7 @@ class Round:
         return False
 
     def is_finished(self):
+        self.end()
         return all(match.is_finished() for match in self.matches)
 
     def to_dict(self):
@@ -168,12 +172,8 @@ class Round:
         """
         return {
             "round_name": self.round_name,
-            "datetime_start": datetime.timestamp(self.datetime_start)
-            if self.datetime_start
-            else None,
-            "datetime_end": datetime.timestamp(self.datetime_end)
-            if self.datetime_end
-            else None,
+            "datetime_start": self.datetime_start,
+            "datetime_end": self.datetime_end,
             "matches": [m.to_dict() for m in self.matches],
         }
 

@@ -1,3 +1,5 @@
+import ipdb
+
 class TournamentView:
     @classmethod
     def display_list_tournaments(cls, tournaments):
@@ -5,7 +7,7 @@ class TournamentView:
         print("")
         for tournament in tournaments:
             print(
-                f"{tournament.name}\t{tournament.place}\t{tournament.start}\t\t{tournament.end}"
+                f"Nom :{tournament.name}\tLieu: {tournament.place}\tDebut: {tournament.start}\tFin: {tournament.end}"
             )
         print("")
         print("1. Consulter/reprendre Tournoi")
@@ -48,7 +50,7 @@ class TournamentView:
         if tournament.rounds:
             for round in tournament.rounds:
                 print("")
-                print(f"{round.round_name}:")
+                print(f"Nom: {round.round_name}:, Debut: {round.datetime_start}, Fin: {round.datetime_end}.")
                 for match in round.matches:
                     if not match.points1 and not match.points2:
                         print(
@@ -63,10 +65,10 @@ class TournamentView:
         elif len(store.data["players"]) < 8:
             print("A. Ajouter joueur(s) au tournoi")
         elif tournament.is_finished() and len(tournament.rounds) == 4:
-            tournament.set_end_time()
-            print("Tournoi termine !")
-            print("U. Mettez à jour le classements des joueurs")
-
+            print("")
+            print("Le tournoi est termine !")
+            print("U. Mettez a jour le classements des joueurs")
+            print("")
         elif not tournament.current_round.is_finished():
             print("")
             current_round = tournament.current_round
@@ -84,21 +86,19 @@ class TournamentView:
                 if not current_round.matches[1].is_finished():
                     print(f"2. Jouer le match {current_round.matches[1]}")
                 if not current_round.matches[2].is_finished():
-                    print(f"3. Jouer le match {current_round.matches[2]}")
-                if not current_round.matches[3].is_finished() and current_round.matches[3]:
+                    print(f"3. Jouer le match {current_round.matches[2]}") 
+                if len(current_round.matches) > 3 and not current_round.matches[3].is_finished():
                     print(f"4. Jouer le match {current_round.matches[3]}")
                 choice = input("Votre choix: ")
-
                 return "play_match", int(choice) - 1
 
         elif tournament.current_round.is_finished() and len(tournament.rounds) < 4:
             print("S. Creer le round suivant.")
-
+            
         print("4. Trier les joueurs par classement")
         print("5. Trier les joueurs par ordre alphabetique")
         print("H. Page d'accueil")
         print("Q. Quitter le programme")
-
         print("")
         return input("Tapez Votre Choix:"), None
 

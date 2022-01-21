@@ -3,11 +3,11 @@ from operator import attrgetter
 
 
 class Tournament:
-    def __init__(self, name, place, start, end, time, description):
+    def __init__(self, name, place, time, description):
         self.name = name
         self.place = place
-        self.start = datetime.now().strftime("%d/%m/%y %I:%M %S %p") if not start else start
-        self.end = None if not end else end
+        self.start = datetime.now().strftime("%d/%m/%y %I:%M %S %p")
+        self.end = None
         self.rounds = []
         self.players = []
         self.time = time
@@ -117,8 +117,6 @@ class Tournament:
         tournament = cls(
             name=tournament_dict["name"],
             place=tournament_dict["place"],
-            start=tournament_dict["start"],
-            end=tournament_dict["end"],
             time=tournament_dict["time"],
             description=tournament_dict["description"],
         )

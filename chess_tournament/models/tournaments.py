@@ -1,11 +1,12 @@
 from datetime import datetime
 from operator import attrgetter
 
+
 class Tournament:
     def __init__(self, name, place, start, end, time, description):
         self.name = name
         self.place = place
-        self.start = datetime.now().strftime('%d/%m/%y %I:%M %S %p') if not start else start
+        self.start = datetime.now().strftime("%d/%m/%y %I:%M %S %p") if not start else start
         self.end = None if not end else end
         self.rounds = []
         self.players = []
@@ -76,7 +77,7 @@ class Tournament:
         return all(round.is_finished() for round in self.rounds)
 
     def set_end_time(self):
-        self.end = datetime.now().strftime('%d/%m/%y %I:%M %S %p')
+        self.end = datetime.now().strftime("%d/%m/%y %I:%M %S %p")
 
     def update(self, name, place, start, end, time, description):
         self.name = name
@@ -117,7 +118,7 @@ class Tournament:
             name=tournament_dict["name"],
             place=tournament_dict["place"],
             start=tournament_dict["start"],
-            end=tournament_dict['end'],
+            end=tournament_dict["end"],
             time=tournament_dict["time"],
             description=tournament_dict["description"],
         )
@@ -132,9 +133,7 @@ class TournamentManager:
         self.store = store
 
     def get_tournament(self, tournament_name):
-        return next(
-            p for p in self.store.data["tournaments"] if p.name == tournament_name
-        )
+        return next(p for p in self.store.data["tournaments"] if p.name == tournament_name)
 
     def get_all_tournaments(self):
         return self.store["tournaments"]
@@ -143,7 +142,7 @@ class TournamentManager:
 class Round:
     def __init__(self, round_name, datetime_end=None, datetime_start=None):
         self.round_name = round_name
-        self.datetime_start = datetime.now().strftime('%d/%m/%y %I:%M %S %p') if not datetime_start else datetime_start
+        self.datetime_start = datetime.now().strftime("%d/%m/%y %I:%M %S %p") if not datetime_start else datetime_start
         self.datetime_end = datetime_end
         self.matches = []
 
@@ -151,7 +150,7 @@ class Round:
         return f"{self.round_name}: {self.matches}"
 
     def end(self):
-        self.datetime_end = datetime.now().strftime('%d/%m/%y %I:%M %S %p')
+        self.datetime_end = datetime.now().strftime("%d/%m/%y %I:%M %S %p")
 
     def has_played(self, player1, player2):
         """
@@ -218,9 +217,7 @@ class Match:
         Lets program know if pairing has already played
         """
         return (
-            self.is_finished()
-            and player1 in (self.player1, self.player2)
-            and player2 in (self.player1, self.player2)
+            self.is_finished() and player1 in (self.player1, self.player2) and player2 in (self.player1, self.player2)
         )
 
     def to_dict(self):

@@ -51,6 +51,5 @@ class PlayerView:
         print(f"Modification du joueur {player}")
         print("")
         return {
-            "ranking": input(f"Indiquez le nouveau classement [{player.ranking}]: ")
-            or player.id,
+            "ranking": input(f"Indiquez le nouveau classement [{player.ranking}]: ") or player.id,
         }

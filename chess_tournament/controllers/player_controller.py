@@ -1,6 +1,7 @@
 from chess_tournament.models.players import Player, PlayerManager
 from chess_tournament.views.player_view import PlayerView
 
+
 class PlayerController:
     @classmethod
     def list_players(cls, store, route_params=None):

@@ -1,1 +1,224 @@
-{"players": {"1": {"id": "4", "lastname": "Bodriol", "ranking": "125", "firstname": "Serge", "gender": "m", "birth": "05/08/2000"}, "2": {"id": "6", "lastname": "depardieu", "ranking": "54", "firstname": "gerard", "gender": "m", "birth": "12/08/1976"}, "3": {"id": "1", "lastname": "fett", "ranking": "105", "firstname": "jango", "gender": "m", "birth": "15/12/2001"}, "4": {"id": "2", "lastname": "reizer", "ranking": "56", "firstname": "pauline", "gender": "f", "birth": "12/04/1999"}, "5": {"id": "3", "lastname": "virgo", "ranking": "5", "firstname": "debra", "gender": "f", "birth": "05/07/1976"}, "6": {"id": "5", "lastname": "bertone", "ranking": "2", "firstname": "andrea", "gender": "m", "birth": "16/11/1998"}, "7": {"id": "7", "lastname": "toto", "ranking": "78", "firstname": "africa", "gender": "f", "birth": "19/05/2001"}, "8": {"id": "8", "lastname": "durand", "ranking": "1", "firstname": "albert", "gender": "m", "birth": "08/09/1923"}}, "tournaments": {"1": {"name": "Premier", "place": "Paris", "start": "20/01/22 09:29 10 PM", "end": "20/01/22 09:29 53 PM", "rounds": [{"round_name": "Round1", "datetime_start": "20/01/22 09:24 25 PM", "datetime_end": "20/01/22 09:29 53 PM", "matches": [{"player1": "8", "player2": "3", "points1": 1, "points2": 0}, {"player1": "1", "player2": "6", "points1": 1, "points2": 0}, {"player1": "4", "player2": "2", "points1": 1, "points2": 0}, {"player1": "5", "player2": "7", "points1": 0.5, "points2": 0.5}]}, {"round_name": "Round2", "datetime_start": "20/01/22 09:29 18 PM", "datetime_end": "20/01/22 09:29 53 PM", "matches": [{"player1": "7", "player2": "2", "points1": 1, "points2": 0}, {"player1": "6", "player2": "3", "points1": 0.5, "points2": 0.5}, {"player1": "5", "player2": "4", "points1": 0.5, "points2": 0.5}, {"player1": "1", "player2": "8", "points1": 0.5, "points2": 0.5}]}, {"round_name": "Round3", "datetime_start": "20/01/22 09:29 31 PM", "datetime_end": "20/01/22 09:29 53 PM", "matches": [{"player1": "7", "player2": "6", "points1": 1, "points2": 0}, {"player1": "3", "player2": "5", "points1": 1, "points2": 0}, {"player1": "4", "player2": "1", "points1": 1, "points2": 0}, {"player1": "8", "player2": "2", "points1": 0.5, "points2": 0.5}]}, {"round_name": "Round4", "datetime_start": "20/01/22 09:29 44 PM", "datetime_end": "20/01/22 09:29 53 PM", "matches": [{"player1": "7", "player2": "3", "points1": 1, "points2": 0}, {"player1": "4", "player2": "8", "points1": 1, "points2": 0}, {"player1": "2", "player2": "6", "points1": 0.5, "points2": 0.5}, {"player1": "5", "player2": "1", "points1": 1, "points2": 0}]}], "players": ["1", "2", "3", "4", "5", "6", "7", "8"], "time": "Blitz", "description": "Premier test", "scores": {"7": 3, "2": 1.0, "6": 1.0, "3": 1.5, "5": 1.5, "4": 2.5, "1": 0.5, "8": 1.0}}}}
+{
+    "players": {
+        "1": {
+            "id": "4",
+            "lastname": "Bodriol",
+            "ranking": "125",
+            "firstname": "Serge",
+            "gender": "m",
+            "birth": "05/08/2000"
+        },
+        "2": {
+            "id": "6",
+            "lastname": "depardieu",
+            "ranking": "54",
+            "firstname": "gerard",
+            "gender": "m",
+            "birth": "12/08/1976"
+        },
+        "3": {
+            "id": "1",
+            "lastname": "fett",
+            "ranking": "105",
+            "firstname": "jango",
+            "gender": "m",
+            "birth": "15/12/2001"
+        },
+        "4": {
+            "id": "2",
+            "lastname": "reizer",
+            "ranking": "56",
+            "firstname": "pauline",
+            "gender": "f",
+            "birth": "12/04/1999"
+        },
+        "5": {
+            "id": "3",
+            "lastname": "virgo",
+            "ranking": "5",
+            "firstname": "debra",
+            "gender": "f",
+            "birth": "05/07/1976"
+        },
+        "6": {
+            "id": "5",
+            "lastname": "bertone",
+            "ranking": "2",
+            "firstname": "andrea",
+            "gender": "m",
+            "birth": "16/11/1998"
+        },
+        "7": {
+            "id": "7",
+            "lastname": "toto",
+            "ranking": "78",
+            "firstname": "africa",
+            "gender": "f",
+            "birth": "19/05/2001"
+        },
+        "8": {
+            "id": "8",
+            "lastname": "durand",
+            "ranking": "1",
+            "firstname": "albert",
+            "gender": "m",
+            "birth": "08/09/1923"
+        }
+    },
+    "tournaments": {
+        "1": {
+            "name": "Premier",
+            "place": "Paris",
+            "start": "20/01/22 09:29 10 PM",
+            "end": "20/01/22 09:29 53 PM",
+            "rounds": [
+                {
+                    "round_name": "Round1",
+                    "datetime_start": "20/01/22 09:24 25 PM",
+                    "datetime_end": "20/01/22 09:29 53 PM",
+                    "matches": [
+                        {
+                            "player1": "8",
+                            "player2": "3",
+                            "points1": 1,
+                            "points2": 0
+                        },
+                        {
+                            "player1": "1",
+                            "player2": "6",
+                            "points1": 1,
+                            "points2": 0
+                        },
+                        {
+                            "player1": "4",
+                            "player2": "2",
+                            "points1": 1,
+                            "points2": 0
+                        },
+                        {
+                            "player1": "5",
+                            "player2": "7",
+                            "points1": 0.5,
+                            "points2": 0.5
+                        }
+                    ]
+                },
+                {
+                    "round_name": "Round2",
+                    "datetime_start": "20/01/22 09:29 18 PM",
+                    "datetime_end": "20/01/22 09:29 53 PM",
+                    "matches": [
+                        {
+                            "player1": "7",
+                            "player2": "2",
+                            "points1": 1,
+                            "points2": 0
+                        },
+                        {
+                            "player1": "6",
+                            "player2": "3",
+                            "points1": 0.5,
+                            "points2": 0.5
+                        },
+                        {
+                            "player1": "5",
+                            "player2": "4",
+                            "points1": 0.5,
+                            "points2": 0.5
+                        },
+                        {
+                            "player1": "1",
+                            "player2": "8",
+                            "points1": 0.5,
+                            "points2": 0.5
+                        }
+                    ]
+                },
+                {
+                    "round_name": "Round3",
+                    "datetime_start": "20/01/22 09:29 31 PM",
+                    "datetime_end": "20/01/22 09:29 53 PM",
+                    "matches": [
+                        {
+                            "player1": "7",
+                            "player2": "6",
+                            "points1": 1,
+                            "points2": 0
+                        },
+                        {
+                            "player1": "3",
+                            "player2": "5",
+                            "points1": 1,
+                            "points2": 0
+                        },
+                        {
+                            "player1": "4",
+                            "player2": "1",
+                            "points1": 1,
+                            "points2": 0
+                        },
+                        {
+                            "player1": "8",
+                            "player2": "2",
+                            "points1": 0.5,
+                            "points2": 0.5
+                        }
+                    ]
+                },
+                {
+                    "round_name": "Round4",
+                    "datetime_start": "20/01/22 09:29 44 PM",
+                    "datetime_end": "20/01/22 09:29 53 PM",
+                    "matches": [
+                        {
+                            "player1": "7",
+                            "player2": "3",
+                            "points1": 1,
+                            "points2": 0
+                        },
+                        {
+                            "player1": "4",
+                            "player2": "8",
+                            "points1": 1,
+                            "points2": 0
+                        },
+                        {
+                            "player1": "2",
+                            "player2": "6",
+                            "points1": 0.5,
+                            "points2": 0.5
+                        },
+                        {
+                            "player1": "5",
+                            "player2": "1",
+                            "points1": 1,
+                            "points2": 0
+                        }
+                    ]
+                }
+            ],
+            "players": [
+                "1",
+                "2",
+                "3",
+                "4",
+                "5",
+                "6",
+                "7",
+                "8"
+            ],
+            "time": "Blitz",
+            "description": "Premier test",
+            "scores": {
+                "7": 3,
+                "2": 1.0,
+                "6": 1.0,
+                "3": 1.5,
+                "5": 1.5,
+                "4": 2.5,
+                "1": 0.5,
+                "8": 1.0
+            }
+        }
+    }
+}

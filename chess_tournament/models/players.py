@@ -8,9 +8,7 @@ class Player:
         self.ranking = ranking
 
     def __repr__(self):
-        return (
-            f"Joueur #{self.id} {self.firstname} {self.lastname.upper()} {self.ranking}"
-        )
+        return f"Joueur #{self.id} {self.firstname} {self.lastname.upper()} {self.ranking}"
 
     def update(self, ranking):
         self.ranking = ranking
@@ -32,14 +30,13 @@ class Player:
     def from_dict(cls, player_dict):
         return cls(**player_dict)
 
+
 class PlayerManager:
     def __init__(self, store):
         self.store = store
 
     def get_player(self, player_id):
-        return next(
-            p for p in self.store.data["players"] if str(p.id) == str(player_id)
-        )
+        return next(p for p in self.store.data["players"] if str(p.id) == str(player_id))
 
     def get_all(self):
         return self.store["players"]

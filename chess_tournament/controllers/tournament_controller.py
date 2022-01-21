@@ -3,14 +3,12 @@ from chess_tournament.models.tournaments import (
 )
 from chess_tournament.views.tournaments_view import TournamentView
 from chess_tournament.models.players import Player
-import ipdb
+
 
 class TournamentController:
     @classmethod
     def list_tournaments(cls, store, route_params=None):
-        choice, tournament_name = TournamentView.display_list_tournaments(
-            store.get_all_tournaments()
-        )
+        choice, tournament_name = TournamentView.display_list_tournaments(store.get_all_tournaments())
         if choice == "1":
             return "view_tournament", tournament_name
         elif choice == "2":

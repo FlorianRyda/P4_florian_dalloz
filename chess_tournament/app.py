@@ -6,6 +6,7 @@ from chess_tournament.models.tournaments import Tournament, Round, Match
 import subprocess as sp
 from tinydb import TinyDB, Query
 
+
 class Store:
     def __init__(self):
         self.data = {"players": [], "tournaments": []}
@@ -39,9 +40,7 @@ class Store:
 
     def save_tournament(self, tournament):
         tournament_query = Query()
-        self.tournaments_table.upsert(
-            tournament.to_dict(), tournament_query.name == tournament.name
-        )
+        self.tournaments_table.upsert(tournament.to_dict(), tournament_query.name == tournament.name)
 
     def get_player(self, player_id):
         return next(p for p in self.data["players"] if str(p.id) == str(player_id))
@@ -62,6 +61,7 @@ class Store:
     def create_tournament(self, tournament):
         self.data["tournaments"].append(tournament)
         self.save_tournament(tournament)
+
 
 class Application:
 

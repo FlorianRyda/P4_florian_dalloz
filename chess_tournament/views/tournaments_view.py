@@ -1,5 +1,3 @@
-import ipdb
-
 class TournamentView:
     @classmethod
     def display_list_tournaments(cls, tournaments):
@@ -21,7 +19,7 @@ class TournamentView:
 
         if choice in ("1", "3"):
             extra_info = input("Entrez le nom du tournoi:")
-            
+
         return choice, extra_info
 
     @classmethod
@@ -53,9 +51,7 @@ class TournamentView:
                 print(f"Nom: {round.round_name}:, Debut: {round.datetime_start}, Fin: {round.datetime_end}.")
                 for match in round.matches:
                     if not match.points1 and not match.points2:
-                        print(
-                            f"{match.player1} vs {match.player2} en attente de resultats"
-                        )
+                        print(f"{match.player1} vs {match.player2} en attente de resultats")
                     else:
                         print(f"{match.player1} vs {match.player2}")
                         print(f"{match.points1} vs {match.points2}")
@@ -86,7 +82,7 @@ class TournamentView:
                 if not current_round.matches[1].is_finished():
                     print(f"2. Jouer le match {current_round.matches[1]}")
                 if not current_round.matches[2].is_finished():
-                    print(f"3. Jouer le match {current_round.matches[2]}") 
+                    print(f"3. Jouer le match {current_round.matches[2]}")
                 if len(current_round.matches) > 3 and not current_round.matches[3].is_finished():
                     print(f"4. Jouer le match {current_round.matches[3]}")
                 choice = input("Votre choix: ")
@@ -94,7 +90,7 @@ class TournamentView:
 
         elif tournament.current_round.is_finished() and len(tournament.rounds) < 4:
             print("S. Creer le round suivant.")
-            
+
         print("4. Trier les joueurs par classement")
         print("5. Trier les joueurs par ordre alphabetique")
         print("H. Page d'accueil")
